@@ -12,6 +12,11 @@ type TodolistType = {
   removeTask:(taskId:number)=>void
 }
 export const Todolist: React.FC<TodolistType> = (props) => {
+
+  const removeTaskHandler=(tID:number)=>{
+    props.removeTask(tID)
+  }
+
   return <div>
     <h3>{props.title}</h3>
     <div>
@@ -21,10 +26,10 @@ export const Todolist: React.FC<TodolistType> = (props) => {
     <ul>
       {
         props.tasks.map(t=>{
-          // debugger
+
           return <li key={t.id}>
             <input type="checkbox" checked={t.isDone}/> <span>{t.title}</span>
-            <button onClick={()=>props.removeTask(t.id)}>✖️</button>
+            <button onClick={()=>removeTaskHandler(t.id)}>✖️</button>
           </li>
         })
       }
