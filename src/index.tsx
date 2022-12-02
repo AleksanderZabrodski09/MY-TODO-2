@@ -12,11 +12,11 @@ import App from './App';
 //     <App />
 //   </React.StrictMode>
 // );
-import { createRoot } from 'react-dom/client';
+import {createRoot} from 'react-dom/client';
 
 const container = document.getElementById('root');
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript
-root.render(<App  />);
+root.render(<App/>);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
