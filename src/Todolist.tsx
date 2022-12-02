@@ -1,9 +1,11 @@
 import React from 'react';
 
-type TodolistType = {}
-export const Todolist: React.FC<TodolistType> = () => {
+type TodolistType = {
+title:string
+}
+export const Todolist: React.FC<TodolistType> = (props) => {
   return <div>
-    <h3>What to learn</h3>
+    <h3>{props.title}</h3>
     <div>
       <input/>
       <button>+</button>
