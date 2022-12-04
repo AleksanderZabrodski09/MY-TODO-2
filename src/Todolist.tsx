@@ -8,11 +8,12 @@ export type TaskType = {
   isDone: boolean
 }
 type TodolistType = {
+  todolistId:string
   title: string
   tasks: TaskType[]
   addTask: (title: string) => void
   removeTask: (taskId: string) => void
-  changeFilter: (value: changeFilterType) => void
+  changeFilter: ( todolistId:string,value: changeFilterType) => void
   changeTaskStatus: (taskId: string, value: boolean) => void
   filter:changeFilterType
 }
@@ -47,9 +48,9 @@ export const Todolist: React.FC<TodolistType> = (props) => {
     props.changeTaskStatus(tID, eValue)
   }
 
-  const allChangeFilterTasks = () => props.changeFilter('all')
-  const activeChangeFilterTasks = () => props.changeFilter('active')
-  const completedChangeFilterTasks = () => props.changeFilter('completed')
+  const allChangeFilterTasks = () => props.changeFilter( props.todolistId,'all')
+  const activeChangeFilterTasks = () => props.changeFilter( props.todolistId,'active')
+  const completedChangeFilterTasks = () => props.changeFilter( props.todolistId,'completed')
 
 
   return <div>
