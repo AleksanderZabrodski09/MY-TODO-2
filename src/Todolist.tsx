@@ -14,6 +14,7 @@ type TodolistType = {
   removeTask: (taskId: string) => void
   changeFilter: (value: changeFilterType) => void
   changeTaskStatus: (taskId: string, value: boolean) => void
+  filter:changeFilterType
 }
 export const Todolist: React.FC<TodolistType> = (props) => {
 
@@ -68,12 +69,9 @@ export const Todolist: React.FC<TodolistType> = (props) => {
         props.tasks.map(t => {
 
 
-          return <li key={t.id}>
-            <input
-              type="checkbox"
-              checked={t.isDone}
-              onChange={(e) => onChangeTaskStatusHandler(t.id, e.currentTarget.checked)}
-            />
+          return <li key={t.id}  className={t.isDone===true?'isCompleted':''}>
+            <CheckBox checked={t.isDone} callBack={(eValue)=>onChangeTaskStatusHandler(t.id,eValue)}/>
+
             <span>{t.title}</span>
             <button onClick={() => removeTaskHandler(t.id)}>✖️</button>
           </li>
@@ -81,9 +79,22 @@ export const Todolist: React.FC<TodolistType> = (props) => {
       }
     </ul>
     <div>
-      <button onClick={allChangeFilterTasks}>All</button>
-      <button onClick={activeChangeFilterTasks}>Active</button>
-      <button onClick={completedChangeFilterTasks}>Completed</button>
+      <button onClick={allChangeFilterTasks} className={props.filter==='all'?'activeFilter':'buttonFilter'}>All</button>
+      <button onClick={activeChangeFilterTasks} className={props.filter==='active'?'activeFilter':'buttonFilter'}>Active</button>
+      <button onClick={completedChangeFilterTasks} className={props.filter==='completed'?'activeFilter':'buttonFilter'}>Completed</button>
     </div>
   </div>
+}
+
+
+export const CheckBox=({checked,callBack}:{checked:boolean, callBack:(checked:boolean)=>void})=>{
+  const callBackHandler=(e:ChangeEvent<HTMLInputElement>)=>{
+    callBack( e.currentTarget.checked)
+  }
+  return <input
+    type="checkbox"
+    checked={checked}
+    // onChange={(e) => onChangeTaskStatusHandler(t.id, e.currentTarget.checked)}
+    onChange={callBackHandler}
+  />
 }

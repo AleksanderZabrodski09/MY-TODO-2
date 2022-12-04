@@ -14,3 +14,22 @@
 .error{
   border: red 2px solid;
 }
+
+.activeFilter{
+  background-color: brown;
+  border-radius: 5px;
+  color: white;
+}
+
+.buttonFilter{
+  border-radius: 5px;
+}
+.buttonFilter:hover{
+  background-color: rgba(148, 81, 81, 0.4);
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.isCompleted{
+  opacity: 0.4;
+  background-color:rgba(148, 81, 81, 0.4);
+}
