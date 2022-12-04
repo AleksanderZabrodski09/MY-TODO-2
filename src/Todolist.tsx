@@ -16,11 +16,17 @@ type TodolistType = {
   changeFilter: (todolistId:string,value: changeFilterType) => void
   changeTaskStatus: (todolistId:string,taskId: string, value: boolean) => void
   filter:changeFilterType
+  removeTodolist:(todolistId:string)=>void
 }
 export const Todolist: React.FC<TodolistType> = (props) => {
 
   const [title, setTitle] = useState('')
   const [error, setError] = useState<null | string>(null)
+
+
+  const removeTodolistHandler=()=>{
+    props.removeTodolist(props.todolistId)
+  }
 
   const addTask = () => {
     if (title.trim() !== '') {
@@ -33,6 +39,9 @@ export const Todolist: React.FC<TodolistType> = (props) => {
   const removeTaskHandler = (tID: string) => {
     props.removeTask(props.todolistId,tID)
   }
+  const onChangeTaskStatusHandler = (tID: string, eValue: boolean) => {
+    props.changeTaskStatus(props.todolistId,tID, eValue)
+  }
 
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -40,13 +49,10 @@ export const Todolist: React.FC<TodolistType> = (props) => {
     }
       setError('')
   }
-
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value)
   }
-  const onChangeTaskStatusHandler = (tID: string, eValue: boolean) => {
-    props.changeTaskStatus(props.todolistId,tID, eValue)
-  }
+
 
   const allChangeFilterTasks = () => props.changeFilter( props.todolistId,'all')
   const activeChangeFilterTasks = () => props.changeFilter( props.todolistId,'active')
@@ -54,7 +60,10 @@ export const Todolist: React.FC<TodolistType> = (props) => {
 
 
   return <div>
-    <h3>{props.title}</h3>
+    <h3>
+      {props.title}
+      <button onClick={removeTodolistHandler}>✖</button>
+    </h3>
     <div>
       <input
         value={title}
