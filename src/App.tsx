@@ -45,10 +45,9 @@ function App() {
     setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)})
   }
   const changeTaskStatus = (todolistId: string, taskId: string, value: boolean) => {
-    // setTasks(tasks.map(t => t.id === taskId ? {...t, isDone: value} : t))
+    setTasks({...tasks, [todolistId]: tasks[todolistId].map(t=>t.id===taskId?{...t, isDone: value}:t)})
   }
 
-  // const [filter, setFilter] = useState<changeFilterType>('all')
 
 
   const changeFilter = (todolistId: string, value: changeFilterType) => {

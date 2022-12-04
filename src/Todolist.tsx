@@ -14,7 +14,7 @@ type TodolistType = {
   addTask: (todolistId:string,title: string) => void
   removeTask: (todolistId:string,taskId: string) => void
   changeFilter: (todolistId:string,value: changeFilterType) => void
-  changeTaskStatus: (taskId: string, value: boolean) => void
+  changeTaskStatus: (todolistId:string,taskId: string, value: boolean) => void
   filter:changeFilterType
 }
 export const Todolist: React.FC<TodolistType> = (props) => {
@@ -45,7 +45,7 @@ export const Todolist: React.FC<TodolistType> = (props) => {
     setTitle(e.currentTarget.value)
   }
   const onChangeTaskStatusHandler = (tID: string, eValue: boolean) => {
-    props.changeTaskStatus(tID, eValue)
+    props.changeTaskStatus(props.todolistId,tID, eValue)
   }
 
   const allChangeFilterTasks = () => props.changeFilter( props.todolistId,'all')
