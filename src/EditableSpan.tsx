@@ -1,0 +1,33 @@
+import React, {ChangeEvent, useState,KeyboardEvent} from 'react';
+
+export const EditableSpan = ({value,callback }: { value: string, callback:(newTitle:string)=>void }) => {
+  const [editMode, setEditMode] = useState(false)
+  const [title, setTitle] = useState(value)
+
+  const activeEditMode = () => {
+    setEditMode(true)
+    setTitle(value)
+  }
+  const viewMode = () => {
+    setEditMode(false)
+    callback(title.trim())
+  }
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value)
+  }
+  const onKeyPressHandler=(e:KeyboardEvent<HTMLInputElement>)=>{
+    if(e.key==='Enter'){
+      viewMode()
+    }
+  }
+
+  return editMode
+    ? <input
+      value={title}
+      onChange={onChangeHandler}
+      onBlur={viewMode}
+      onKeyPress={onKeyPressHandler}
+      autoFocus
+    />
+    : <span onDoubleClick={activeEditMode}>{title}</span>
+}

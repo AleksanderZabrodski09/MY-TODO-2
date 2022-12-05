@@ -2,6 +2,7 @@ import React from 'react';
 import {changeFilterType} from './App';
 import {CheckBox} from './CheckBox';
 import {InputForm} from './InputForm';
+import {EditableSpan} from './EditableSpan';
 
 
 export type TaskType = {
@@ -19,6 +20,7 @@ type TodolistType = {
   changeTaskStatus: (todolistId: string, taskId: string, value: boolean) => void
   filter: changeFilterType
   removeTodolist: (todolistId: string) => void
+  changeTaskTitle:(todolistId: string, taskId: string, title: string)=>void
 }
 export const Todolist: React.FC<TodolistType> = (props) => {
 
@@ -26,8 +28,8 @@ export const Todolist: React.FC<TodolistType> = (props) => {
     props.removeTodolist(props.todolistId)
   }
 
-  const addTaskHandler = (newTitle:string) => {
-   props.addTask(props.todolistId, newTitle)
+  const addTaskHandler = (newTitle: string) => {
+    props.addTask(props.todolistId, newTitle)
   }
   const removeTaskHandler = (tID: string) => {
     props.removeTask(props.todolistId, tID)
@@ -35,9 +37,9 @@ export const Todolist: React.FC<TodolistType> = (props) => {
   const onChangeTaskStatusHandler = (tID: string, eValue: boolean) => {
     props.changeTaskStatus(props.todolistId, tID, eValue)
   }
-
-
-
+ const changeTaskTitleHandler=(tID:string, title:string)=>{
+    props.changeTaskTitle(props.todolistId, tID, title)
+ }
 
   const allChangeFilterTasks = () => props.changeFilter(props.todolistId, 'all')
   const activeChangeFilterTasks = () => props.changeFilter(props.todolistId, 'active')
@@ -50,15 +52,15 @@ export const Todolist: React.FC<TodolistType> = (props) => {
       <button onClick={removeTodolistHandler}>✖</button>
     </h3>
 
-            <InputForm addInput={addTaskHandler}/>
+    <InputForm addInput={addTaskHandler}/>
     <ul>
       {
         props.tasks.map(t => {
 
-
           return <li key={t.id} className={t.isDone ? 'isCompleted' : ''}>
             <CheckBox checked={t.isDone} callBack={(eValue) => onChangeTaskStatusHandler(t.id, eValue)}/>
-            <span>{t.title}</span>
+            <EditableSpan value={t.title} callback={(newTitle)=>changeTaskTitleHandler(t.id,newTitle)}/>
+            {/*<span>{t.title}</span>*/}
             <button onClick={() => removeTaskHandler(t.id)}>✖️</button>
           </li>
         })
@@ -77,4 +79,5 @@ export const Todolist: React.FC<TodolistType> = (props) => {
     </div>
   </div>
 }
+
 
