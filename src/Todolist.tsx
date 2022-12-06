@@ -20,7 +20,8 @@ export const Todolist: React.FC<TodolistType> = (props) => {
 const [newTitle, setNewTitle]=useState('')
 
   const addTaskHandler=()=>{
-    props.addTask(newTitle)
+  if(newTitle.trim()!=='')
+    props.addTask(newTitle.trim())
     setNewTitle('')
   }
 
