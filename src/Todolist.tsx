@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {ChangeFilterType} from './App';
 
 
@@ -21,7 +21,12 @@ const [newTitle, setNewTitle]=useState('')
 
   const addTaskHandler=()=>{
     props.addTask(newTitle)
-    console.log('addTitle1')
+    setNewTitle('')
+  }
+
+  const onChangeHandler=(e:ChangeEvent<HTMLInputElement>)=>{
+    setNewTitle(e.currentTarget.value)
+
   }
 
   const allClickFilter=()=>{
@@ -32,7 +37,7 @@ const [newTitle, setNewTitle]=useState('')
     <div>
       <h3>{props.title}</h3>
       <div>
-        <input/>
+        <input value={newTitle} onChange={onChangeHandler}/>
         <button onClick={addTaskHandler}>+</button>
       </div>
       <ul>

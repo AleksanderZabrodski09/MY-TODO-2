@@ -19,7 +19,6 @@ function App() {
   }
   const addTask=(newTitle:string)=>{
     setTasks([{id: v1(), title: newTitle, isDone: false}, ...tasks])
-    console.log('addTitle')
   }
 
   const [filter, setFilter] = useState<ChangeFilterType>('all')
