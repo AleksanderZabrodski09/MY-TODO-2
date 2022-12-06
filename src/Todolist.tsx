@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ChangeFilterType} from './App';
 
 
-type TasksType = {
-  id: number
+export type TasksType = {
+  id: string
   title: string
   isDone: boolean
 }
@@ -11,11 +11,18 @@ type TasksType = {
 type TodolistType = {
   title: string
   tasks: TasksType[]
-  removeTask: (taskId: number) => void
+  removeTask: (taskId: string) => void
   changeFilter:(value:ChangeFilterType)=>void
+  addTask:(newTitle:string)=>void
 }
 export const Todolist: React.FC<TodolistType> = (props) => {
 
+const [newTitle, setNewTitle]=useState('')
+
+  const addTaskHandler=()=>{
+    props.addTask(newTitle)
+    console.log('addTitle1')
+  }
 
   const allClickFilter=()=>{
     props.changeFilter('all')
@@ -26,7 +33,7 @@ export const Todolist: React.FC<TodolistType> = (props) => {
       <h3>{props.title}</h3>
       <div>
         <input/>
-        <button>+</button>
+        <button onClick={addTaskHandler}>+</button>
       </div>
       <ul>
         {
