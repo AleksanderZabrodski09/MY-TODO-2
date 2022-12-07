@@ -13,10 +13,10 @@ type TodolistType = {
   todolistId: string
   title: string
   tasks: TasksType[]
-  removeTask: (taskId: string) => void
+  removeTask: (todolistId:string,taskId: string) => void
   changeFilter: (todolistId:string,value: ChangeFilterType) => void
-  addTask: (newTitle: string) => void
-  changeTaskStatus: (taskId: string, value: boolean) => void
+  addTask: (todolistId:string,newTitle: string) => void
+  changeTaskStatus: (todolistId:string,taskId: string, value: boolean) => void
   filter: ChangeFilterType
   removeTodolist:(todolistId:string)=>void
 }
@@ -29,17 +29,17 @@ export const Todolist: React.FC<TodolistType> = (props) => {
 
   const addTaskHandler = () => {
     if (newTitle.trim() !== '') {
-      props.addTask(newTitle.trim())
+      props.addTask(props.todolistId,newTitle.trim())
       setNewTitle('')
     } else {
       setError('title is required')
     }
   }
   const removeTaskHandler = (tID: string) => {
-    props.removeTask(tID)
+    props.removeTask(props.todolistId,tID)
   }
   const changeTaskStatus = (tID: string, eValue: boolean) => {
-    props.changeTaskStatus(tID, eValue)
+    props.changeTaskStatus(props.todolistId,tID, eValue)
   }
 
   const removeTodolistHandler=()=>{

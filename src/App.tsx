@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Todolist} from './Todolist';
+import {TasksType, Todolist} from './Todolist';
 import {v1} from 'uuid';
 
 
@@ -9,6 +9,9 @@ export type TodolistsPropsType = {
   todolistId: string
   title: string
   filter: ChangeFilterType
+}
+export type TaskPropsType={
+  [key:string]:TasksType[]
 }
 
 function App() {
@@ -20,7 +23,7 @@ function App() {
     {todolistId: todolistId2, title: "What to buy?", filter: 'all'}
   ])
 
-  const [tasks, setTasks] = useState({
+  const [tasks, setTasks] = useState<TaskPropsType>({
       [todolistId1]: [
         {id: v1(), title: "HTML&CSS", isDone: true},
         {id: v1(), title: "JS", isDone: true},
@@ -35,14 +38,15 @@ function App() {
     }
   )
 
-  const removeTask = (taskId: string) => {
-    // setTasks(tasks.filter(t => t.id !== taskId))
+  const removeTask = (todolistId: string,taskId: string) => {
+    setTasks({...tasks, [todolistId]:tasks[todolistId].filter(t => t.id !== taskId)})
   }
-  const addTask = (newTitle: string) => {
-    // setTasks([{id: v1(), title: newTitle, isDone: false}, ...tasks])
+  const addTask = (todolistId: string,newTitle: string) => {
+    // setTasks({{id: v1(), title: newTitle, isDone: false}, ...tasks})
+    setTasks({...tasks, [todolistId]:[ {id: v1(), title: newTitle, isDone: false}, ...tasks[todolistId]]})
   }
-  const changeTaskStatus = (taskId: string, value: boolean) => {
-    // setTasks(tasks.map(t => t.id === taskId ? {...t, isDone: value} : t))
+  const changeTaskStatus = (todolistId: string,taskId: string, value: boolean) => {
+    setTasks({...tasks, [todolistId]:tasks[todolistId].map(t => t.id === taskId ? {...t, isDone: value} : t)})
   }
 
 
