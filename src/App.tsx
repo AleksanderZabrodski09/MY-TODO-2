@@ -5,8 +5,18 @@ import {v1} from 'uuid';
 
 
 export type ChangeFilterType = 'all' | 'active' | 'completed'
+export type TodolistType = {
+  todolistId: string
+  title: string
+  filter: ChangeFilterType
+}
 
 function App() {
+
+  const [todolists, setTodolists]=useState<TodolistType[]>([
+    {todolistId: v1(), title: "What to learn?", filter: 'all'},
+    {todolistId: v1(), title: "What to buy?", filter: 'all'}
+  ])
 
   const [tasks, setTasks] = useState([
     {id: v1(), title: "HTML&CSS", isDone: true},

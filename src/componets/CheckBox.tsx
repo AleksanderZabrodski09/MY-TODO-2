@@ -8,6 +8,5 @@ export const CheckBox = ({checked, callBack}: { checked: boolean, callBack: (che
     type="checkbox"
     checked={checked}
     onChange={callBackHandler}
-
   />
 }
