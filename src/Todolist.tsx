@@ -10,14 +10,18 @@ export type TasksType = {
 }
 
 type TodolistType = {
+  todolistId: string
   title: string
   tasks: TasksType[]
   removeTask: (taskId: string) => void
-  changeFilter: (value: ChangeFilterType) => void
+  changeFilter: (todolistId:string,value: ChangeFilterType) => void
   addTask: (newTitle: string) => void
   changeTaskStatus: (taskId: string, value: boolean) => void
   filter: ChangeFilterType
+  removeTodolist:(todolistId:string)=>void
 }
+
+
 export const Todolist: React.FC<TodolistType> = (props) => {
 
   const [newTitle, setNewTitle] = useState('')
@@ -34,6 +38,13 @@ export const Todolist: React.FC<TodolistType> = (props) => {
   const removeTaskHandler = (tID: string) => {
     props.removeTask(tID)
   }
+  const changeTaskStatus = (tID: string, eValue: boolean) => {
+    props.changeTaskStatus(tID, eValue)
+  }
+
+  const removeTodolistHandler=()=>{
+    props.removeTodolist(props.todolistId)
+  }
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTitle(e.currentTarget.value)
@@ -45,18 +56,17 @@ export const Todolist: React.FC<TodolistType> = (props) => {
       setError(null)
   }
 
-  const changeTaskStatus = (tID: string, eValue: boolean) => {
-    props.changeTaskStatus(tID, eValue)
-  }
-
-  const allClickFilter = () => props.changeFilter('all')
-  const activeClickFilter = () => props.changeFilter('active')
-  const completedClickFilter = () => props.changeFilter('completed')
+  const allClickFilter = () => props.changeFilter(props.todolistId,'all')
+  const activeClickFilter = () => props.changeFilter(props.todolistId,'active')
+  const completedClickFilter = () => props.changeFilter(props.todolistId,'completed')
 
 
   return (
     <div>
-      <h3>{props.title}</h3>
+      <h3>
+        {props.title}
+        <button onClick={removeTodolistHandler}>X</button>
+      </h3>
       <div>
         <input
           value={newTitle}
@@ -80,7 +90,6 @@ export const Todolist: React.FC<TodolistType> = (props) => {
                 <span>{t.title}</span>
                 <button onClick={() => removeTaskHandler(t.id)}>x</button>
               </li>)
-
           })
         }
 
