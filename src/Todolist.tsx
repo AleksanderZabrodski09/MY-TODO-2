@@ -1,5 +1,6 @@
-import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {ChangeFilterType} from './App';
+import {CheckBox} from './componets/CheckBox';
 
 
 export type TasksType = {
@@ -66,11 +67,7 @@ export const Todolist: React.FC<TodolistType> = (props) => {
             return (
 
               <li key={t.id}>
-                <input
-                  type="checkbox"
-                  checked={t.isDone}
-                  onChange={(e)=>changeTaskStatus(t.id, e.currentTarget.checked)}
-                />
+                <CheckBox  checked={t.isDone} callBack={(eValue)=>changeTaskStatus(t.id,eValue )}/>
                 <span>{t.title}</span>
                 <button onClick={()=>removeTaskHandler(t.id)}>x</button>
               </li>)
@@ -87,3 +84,5 @@ export const Todolist: React.FC<TodolistType> = (props) => {
     </div>
   )
 }
+
+
