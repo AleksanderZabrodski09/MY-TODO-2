@@ -47,6 +47,7 @@ const changeTaskStatus=(taskId: string,value:boolean)=>{
         changeFilter={changeFilter}
         addTask={addTask}
         changeTaskStatus={changeTaskStatus}
+        filter={filter}
       />
 
     </div>
