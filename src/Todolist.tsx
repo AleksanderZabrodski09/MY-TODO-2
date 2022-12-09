@@ -22,6 +22,7 @@ type TodolistType = {
   changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
   filter: ChangeFilterType
   removeTodolist: (todolistId: string) => void
+  changeTodolistTitle:(todolistId: string, title:string)=>void
 }
 
 
@@ -44,7 +45,9 @@ export const Todolist: React.FC<TodolistType> = (props) => {
   const removeTodolistHandler = () => {
     props.removeTodolist(props.todolistId)
   }
-
+const changeTodolistTitleHandler=(title:string)=>{
+    props.changeTodolistTitle(props.todolistId,title)
+}
 
   const allClickFilter = () => props.changeFilter(props.todolistId, 'all')
   const activeClickFilter = () => props.changeFilter(props.todolistId, 'active')
@@ -54,7 +57,8 @@ export const Todolist: React.FC<TodolistType> = (props) => {
   return (
     <div>
       <h3>
-        {props.title}
+        <EditableSpan value={props.title} callBack={changeTodolistTitleHandler}/>
+        {/*{props.title}*/}
         <button onClick={removeTodolistHandler}>X</button>
       </h3>
       <AddItemForm addItem={addTask}/>
