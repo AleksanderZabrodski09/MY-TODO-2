@@ -1,6 +1,7 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React from 'react';
 import {ChangeFilterType} from './App';
 import {CheckBox} from './componets/CheckBox';
+import {AddItemForm} from './AddItemForm';
 
 
 export type TasksType = {
@@ -24,16 +25,10 @@ type TodolistType = {
 
 export const Todolist: React.FC<TodolistType> = (props) => {
 
-  const [newTitle, setNewTitle] = useState('')
-  const [error, setError] = useState<null | string>('')
 
-  const addTaskHandler = () => {
-    if (newTitle.trim() !== '') {
-      props.addTask(props.todolistId,newTitle.trim())
-      setNewTitle('')
-    } else {
-      setError('title is required')
-    }
+
+  const addTask = (newTitle: string) => {
+   props.addTask(props.todolistId, newTitle)
   }
   const removeTaskHandler = (tID: string) => {
     props.removeTask(props.todolistId,tID)
@@ -46,15 +41,7 @@ export const Todolist: React.FC<TodolistType> = (props) => {
     props.removeTodolist(props.todolistId)
   }
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewTitle(e.currentTarget.value)
-  }
-  const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      addTaskHandler()
-    }
-      setError(null)
-  }
+
 
   const allClickFilter = () => props.changeFilter(props.todolistId,'all')
   const activeClickFilter = () => props.changeFilter(props.todolistId,'active')
@@ -67,16 +54,8 @@ export const Todolist: React.FC<TodolistType> = (props) => {
         {props.title}
         <button onClick={removeTodolistHandler}>X</button>
       </h3>
-      <div>
-        <input
-          value={newTitle}
-          onChange={onChangeHandler}
-          onKeyPress={onKeyPressHandler}
-          className={error ? 'error' : ''}
-        />
-        <button onClick={addTaskHandler}>+</button>
-        {error && <div className='errorMessage'>{error}</div>}
-      </div>
+       <AddItemForm addItem={addTask}/>
+
       <ul>
         {
           props.tasks.map(t => {
