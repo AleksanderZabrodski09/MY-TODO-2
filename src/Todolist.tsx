@@ -3,6 +3,7 @@ import {ChangeFilterType} from './App';
 import {CheckBox} from './componets/CheckBox';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
+import {Button} from '@mui/material';
 
 
 export type TasksType = {
@@ -22,7 +23,7 @@ type TodolistType = {
   changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
   filter: ChangeFilterType
   removeTodolist: (todolistId: string) => void
-  changeTodolistTitle:(todolistId: string, title:string)=>void
+  changeTodolistTitle: (todolistId: string, title: string) => void
 }
 
 
@@ -45,9 +46,9 @@ export const Todolist: React.FC<TodolistType> = (props) => {
   const removeTodolistHandler = () => {
     props.removeTodolist(props.todolistId)
   }
-const changeTodolistTitleHandler=(title:string)=>{
-    props.changeTodolistTitle(props.todolistId,title)
-}
+  const changeTodolistTitleHandler = (title: string) => {
+    props.changeTodolistTitle(props.todolistId, title)
+  }
 
   const allClickFilter = () => props.changeFilter(props.todolistId, 'all')
   const activeClickFilter = () => props.changeFilter(props.todolistId, 'active')
@@ -75,7 +76,7 @@ const changeTodolistTitleHandler=(title:string)=>{
                   callBack={(eValue) => changeTaskStatus(t.id, eValue)}/>
                 <EditableSpan
                   value={t.title}
-                  callBack={(newTitle)=>changeTaskTitle(t.id,newTitle)}/>
+                  callBack={(newTitle) => changeTaskTitle(t.id, newTitle)}/>
                 {/*<span>{t.title}</span>*/}
                 <button onClick={() => removeTaskHandler(t.id)}>x</button>
               </li>)
@@ -84,14 +85,24 @@ const changeTodolistTitleHandler=(title:string)=>{
 
       </ul>
       <div>
-        <button onClick={allClickFilter} className={props.filter === 'all' ? 'activeFilter' : 'filterButton'}>All
-        </button>
-        <button onClick={activeClickFilter}
-                className={props.filter === 'active' ? 'activeFilter' : 'filterButton'}>Active
-        </button>
-        <button onClick={completedClickFilter}
-                className={props.filter === 'completed' ? 'activeFilter' : 'filterButton'}>Completed
-        </button>
+        <Button
+          onClick={allClickFilter}
+          // className={props.filter === 'all' ? 'activeFilter' : 'filterButton'}
+          variant={props.filter === 'all' ? 'outlined' : 'contained'}
+          color='error' size='small'
+        >All
+        </Button>
+        <Button
+          onClick={activeClickFilter}
+          variant={props.filter === 'active' ? 'outlined' : 'contained'} color='error' size='small'
+        >Active
+        </Button>
+        <Button
+          onClick={completedClickFilter}
+          variant={props.filter === 'completed' ? 'outlined' : 'contained'} color='error' size='small'
+
+        >Completed
+        </Button>
       </div>
     </div>
   )
