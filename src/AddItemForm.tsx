@@ -1,4 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {Button} from '@mui/material';
+import PlusOneTwoToneIcon from '@mui/icons-material/PlusOneTwoTone';
 
 export const AddItemForm = ({addItem}: { addItem: (newTitle: string) => void }) => {
 
@@ -31,7 +33,12 @@ export const AddItemForm = ({addItem}: { addItem: (newTitle: string) => void }) 
       onKeyPress={onKeyPressHandler}
       className={error ? 'error' : ''}
     />
-    <button onClick={addItemHandler}>+</button>
+    <Button
+      onClick={addItemHandler}
+      variant='outlined'
+      color='error'
+      style={{maxWidth: '30px', maxHeight: '25px', minWidth: '30px', minHeight: '25px'}}
+    > <PlusOneTwoToneIcon/></Button>
     {error && <div className='errorMessage'>{error}</div>}
   </div>
 

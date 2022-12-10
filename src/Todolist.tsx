@@ -4,6 +4,7 @@ import {CheckBox} from './componets/CheckBox';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
 import {Button} from '@mui/material';
+import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 
 
 export type TasksType = {
@@ -77,8 +78,10 @@ export const Todolist: React.FC<TodolistType> = (props) => {
                 <EditableSpan
                   value={t.title}
                   callBack={(newTitle) => changeTaskTitle(t.id, newTitle)}/>
-                {/*<span>{t.title}</span>*/}
-                <button onClick={() => removeTaskHandler(t.id)}>x</button>
+                <Button
+                  size='small'
+                  onClick={() => removeTaskHandler(t.id)}>
+                  <RemoveCircleTwoToneIcon/></Button>
               </li>)
           })
         }
@@ -88,18 +91,18 @@ export const Todolist: React.FC<TodolistType> = (props) => {
         <Button
           onClick={allClickFilter}
           // className={props.filter === 'all' ? 'activeFilter' : 'filterButton'}
-          variant={props.filter === 'all' ? 'outlined' : 'contained'}
+          variant={props.filter === 'all' ? 'contained' : 'outlined'}
           color='error' size='small'
         >All
         </Button>
         <Button
           onClick={activeClickFilter}
-          variant={props.filter === 'active' ? 'outlined' : 'contained'} color='error' size='small'
+          variant={props.filter === 'active' ? 'contained' : 'outlined'} color='error' size='small'
         >Active
         </Button>
         <Button
           onClick={completedClickFilter}
-          variant={props.filter === 'completed' ? 'outlined' : 'contained'} color='error' size='small'
+          variant={props.filter === 'completed' ? 'contained' : 'outlined'} color='error' size='small'
 
         >Completed
         </Button>
