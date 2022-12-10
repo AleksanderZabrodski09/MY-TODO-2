@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {Button} from '@mui/material';
+import {Button,  TextField} from '@mui/material';
 import PlusOneTwoToneIcon from '@mui/icons-material/PlusOneTwoTone';
 
 export const AddItemForm = ({addItem}: { addItem: (newTitle: string) => void }) => {
@@ -27,19 +27,26 @@ export const AddItemForm = ({addItem}: { addItem: (newTitle: string) => void }) 
   }
 
   return <div>
-    <input
+    <TextField
+      variant='standard'
+      label='title'
+      color='secondary'
       value={newTitle}
       onChange={onChangeHandler}
       onKeyPress={onKeyPressHandler}
-      className={error ? 'error' : ''}
+      // className={error ? 'error' : ''}
+      error={!!error}
+      helperText={error}
     />
     <Button
       onClick={addItemHandler}
       variant='outlined'
       color='error'
       style={{maxWidth: '30px', maxHeight: '25px', minWidth: '30px', minHeight: '25px'}}
-    > <PlusOneTwoToneIcon/></Button>
-    {error && <div className='errorMessage'>{error}</div>}
+    >
+      <PlusOneTwoToneIcon/>
+    </Button>
+    {/*{error && <div className='errorMessage'>{error}</div>}*/}
   </div>
 
 }

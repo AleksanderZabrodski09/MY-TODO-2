@@ -1,11 +1,11 @@
 import React from 'react';
 import {ChangeFilterType} from './App';
 import {CheckBox} from './componets/CheckBox';
-import {AddItemForm} from './AddItemForm';
-import {EditableSpan} from './EditableSpan';
+import {AddItemForm} from './componets/AddItemForm';
+import {EditableSpan} from './componets/EditableSpan';
 import {Button} from '@mui/material';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
-
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 export type TasksType = {
   id: string
@@ -61,17 +61,17 @@ export const Todolist: React.FC<TodolistType> = (props) => {
       <h3>
         <EditableSpan value={props.title} callBack={changeTodolistTitleHandler}/>
         {/*{props.title}*/}
-        <button onClick={removeTodolistHandler}>X</button>
+        <Button onClick={removeTodolistHandler} >
+          <DeleteForeverIcon/></Button>
       </h3>
       <AddItemForm addItem={addTask}/>
 
-      <ul>
+      <div>
         {
           props.tasks.map(t => {
 
             return (
-
-              <li key={t.id} className={t.isDone ? 'taskCompleted' : ''}>
+              <div key={t.id} className={t.isDone ? 'taskCompleted' : ''}>
                 <CheckBox
                   checked={t.isDone}
                   callBack={(eValue) => changeTaskStatus(t.id, eValue)}/>
@@ -81,12 +81,13 @@ export const Todolist: React.FC<TodolistType> = (props) => {
                 <Button
                   size='small'
                   onClick={() => removeTaskHandler(t.id)}>
-                  <RemoveCircleTwoToneIcon/></Button>
-              </li>)
+                  <RemoveCircleTwoToneIcon/>
+                </Button>
+              </div>)
           })
         }
 
-      </ul>
+      </div>
       <div>
         <Button
           onClick={allClickFilter}
