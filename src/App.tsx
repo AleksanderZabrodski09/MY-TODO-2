@@ -26,6 +26,24 @@ function App() {
     {todolistId: todolistId2, title: "What to buy?", filter: 'all'}
   ])
 
+  const addTodolist = (title: string) => {
+    const newTodolistId = v1();
+    setTodolists([{todolistId: newTodolistId, title, filter: 'all'}, ...todolists])
+    setTasks({...tasks, [newTodolistId]: []})
+  }
+  const changeTodolistTitle = (todolistId: string, title: string) => {
+    setTodolists(todolists.map(tl => tl.todolistId === todolistId ? {...tl, title} : tl))
+  }
+  const removeTodolist = (todolistId: string) => {
+    setTodolists(todolists.filter(tl => tl.todolistId !== todolistId))
+    delete tasks[todolistId]
+    setTasks({...tasks})
+  }
+  const changeFilter = (todolistId: string, value: ChangeFilterType) => {
+    setTodolists(todolists.map(tl => tl.todolistId ? {...tl, filter: value} : tl))
+
+  }
+
   const [tasks, setTasks] = useState<TaskPropsType>({
       [todolistId1]: [
         {id: v1(), title: "HTML&CSS", isDone: true},
@@ -55,30 +73,11 @@ function App() {
     setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title} : t)})
   }
 
-  const addTodolist = (title: string) => {
-    const newTodolistId = v1();
-    setTodolists([{todolistId: newTodolistId, title, filter: 'all'}, ...todolists])
-    setTasks({...tasks, [newTodolistId]: []})
-  }
-  const changeTodolistTitle = (todolistId: string, title: string) => {
-    setTodolists(todolists.map(tl => tl.todolistId === todolistId ? {...tl, title} : tl))
-  }
-  const removeTodolist = (todolistId: string) => {
-    setTodolists(todolists.filter(tl => tl.todolistId !== todolistId))
-    delete tasks[todolistId]
-    setTasks({...tasks})
-  }
 
-
-  const changeFilter = (todolistId: string, value: ChangeFilterType) => {
-    setTodolists(todolists.map(tl => tl.todolistId ? {...tl, filter: value} : tl))
-
-  }
 
 
   return (
     <div className="App">
-      {/*<div className='ButtonAppBar'></div>*/}
       <ButtonAppBar/>
       <Container fixed>
         <Grid container style={{padding:'20px'}}>
