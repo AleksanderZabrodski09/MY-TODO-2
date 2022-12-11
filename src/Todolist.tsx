@@ -53,19 +53,19 @@ export const Todolist: React.FC<TodolistType> = (props) => {
     </h3>
 
     <InputForm addInput={addTaskHandler}/>
-    <ul>
+    <div>
       {
         props.tasks.map(t => {
 
-          return <li key={t.id} className={t.isDone ? 'isCompleted' : ''}>
+          return <div key={t.id} className={t.isDone ? 'isCompleted' : ''}>
             <CheckBox checked={t.isDone} callBack={(eValue) => onChangeTaskStatusHandler(t.id, eValue)}/>
             <EditableSpan value={t.title} callback={(newTitle)=>changeTaskTitleHandler(t.id,newTitle)}/>
             {/*<span>{t.title}</span>*/}
             <button onClick={() => removeTaskHandler(t.id)}>✖️</button>
-          </li>
+          </div>
         })
       }
-    </ul>
+    </div>
     <div>
       <button onClick={allChangeFilterTasks}
               className={props.filter === 'all' ? 'activeFilter' : 'buttonFilter'}>All

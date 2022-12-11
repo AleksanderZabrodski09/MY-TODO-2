@@ -1,4 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {Button, TextField} from '@mui/material';
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
 export const InputForm = ({addInput}: { addInput: (title: string) => void }) => {
 
@@ -24,13 +26,21 @@ export const InputForm = ({addInput}: { addInput: (title: string) => void }) => 
   }
 
   return <div>
-    <input
+    <TextField
+      variant="filled"
       value={title}
       onChange={onChangeHandler}
       onKeyPress={onKeyPressHandler}
-      className={error ? 'error' : ''}
+      // className={error ? 'error' : ''}
+      error={!!error}
+      helperText={error}
+
     />
-    <button onClick={addInputForm}>+</button>
-    {error && <div className={'errorMessage'}>{error}</div>}
+    <Button
+      onClick={addInputForm}
+      color='secondary'
+    ><AddToPhotosIcon/>
+    </Button>
+    {/*{error && <div className={'errorMessage'}>{error}</div>}*/}
   </div>
 }
