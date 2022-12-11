@@ -35,6 +35,7 @@ export const InputForm = ({addInput}: { addInput: (title: string) => void }) => 
       error={!!error}
       helperText={error}
       label="title"
+      color='secondary'
     />
     <Button
       onClick={addInputForm}

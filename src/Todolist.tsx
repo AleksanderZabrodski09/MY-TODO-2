@@ -3,7 +3,9 @@ import {ChangeFilterType} from './App';
 import {CheckBox} from './components/CheckBox';
 import {InputForm} from './components/InputForm';
 import {EditableSpan} from './components/EditableSpan';
-
+import {Button} from '@mui/material';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import PlaylistRemoveRoundedIcon from '@mui/icons-material/PlaylistRemoveRounded';
 
 export type TaskType = {
   id: string
@@ -21,13 +23,16 @@ type TodolistType = {
   filter: ChangeFilterType
   removeTodolist: (todolistId: string) => void
   changeTaskTitle:(todolistId: string, taskId: string, title: string)=>void
+  changeTodolistTitle:(todolistId: string, title: string)=>void
 }
 export const Todolist: React.FC<TodolistType> = (props) => {
 
   const removeTodolistHandler = () => {
     props.removeTodolist(props.todolistId)
   }
-
+  const changeTodolistTitleHandler=(title:string)=>{
+    props.changeTodolistTitle(props.todolistId,title)
+  }
   const addTaskHandler = (newTitle: string) => {
     props.addTask(props.todolistId, newTitle)
   }
@@ -48,8 +53,11 @@ export const Todolist: React.FC<TodolistType> = (props) => {
 
   return <div>
     <h3>
-      {props.title}
-      <button onClick={removeTodolistHandler}>✖</button>
+      <EditableSpan value={props.title} callback={changeTodolistTitleHandler}/>
+      <Button
+        onClick={removeTodolistHandler}
+        color='secondary'
+      ><PlaylistRemoveRoundedIcon/></Button>
     </h3>
 
     <InputForm addInput={addTaskHandler}/>
@@ -60,22 +68,39 @@ export const Todolist: React.FC<TodolistType> = (props) => {
           return <div key={t.id} className={t.isDone ? 'isCompleted' : ''}>
             <CheckBox checked={t.isDone} callBack={(eValue) => onChangeTaskStatusHandler(t.id, eValue)}/>
             <EditableSpan value={t.title} callback={(newTitle)=>changeTaskTitleHandler(t.id,newTitle)}/>
-            {/*<span>{t.title}</span>*/}
-            <button onClick={() => removeTaskHandler(t.id)}>✖️</button>
+            <Button
+              onClick={() => removeTaskHandler(t.id)}
+              color='secondary'
+            ><HighlightOffIcon/>
+              {/*✖*/}
+              ️</Button>
           </div>
         })
       }
     </div>
     <div>
-      <button onClick={allChangeFilterTasks}
-              className={props.filter === 'all' ? 'activeFilter' : 'buttonFilter'}>All
-      </button>
-      <button onClick={activeChangeFilterTasks}
-              className={props.filter === 'active' ? 'activeFilter' : 'buttonFilter'}>Active
-      </button>
-      <button onClick={completedChangeFilterTasks}
-              className={props.filter === 'completed' ? 'activeFilter' : 'buttonFilter'}>Completed
-      </button>
+      <Button onClick={allChangeFilterTasks}
+              // className={props.filter === 'all' ? 'activeFilter' : 'buttonFilter'}
+              className='buttonFilter'
+              variant={props.filter === 'all' ? 'outlined' : 'text'}
+              color='secondary'
+              size='small'
+      >All
+      </Button>
+      <Button onClick={activeChangeFilterTasks}
+              className='buttonFilter'
+              variant={props.filter === 'active' ? 'outlined' : 'text'}
+              color='secondary'
+              size='small'
+      >Active
+      </Button>
+      <Button onClick={completedChangeFilterTasks}
+              className='buttonFilter'
+              variant={props.filter === 'completed' ? 'outlined' : 'text'}
+              color='secondary'
+              size='small'
+      >Completed
+      </Button>
     </div>
   </div>
 }

@@ -68,6 +68,10 @@ const changeTaskTitle=(todolistId: string, taskId: string, title: string)=>{
     setTodolists(todolists.map(tl => tl.todolistId === todolistId ? {...tl, filter: value} : tl))
   }
 
+  const changeTodolistTitle=(todolistId: string,title: string)=>{
+    setTodolists(todolists.map(tl=>tl.todolistId===todolistId?{...tl, title}:tl))
+  }
+
   return (
     <div className="App">
       <InputForm addInput={addTodolist}/>
@@ -92,6 +96,7 @@ const changeTaskTitle=(todolistId: string, taskId: string, title: string)=>{
               changeFilter={changeFilter}
               filter={tl.filter}
               removeTodolist={removeTodolist}
+              changeTodolistTitle={changeTodolistTitle}
             />
           }
         )
