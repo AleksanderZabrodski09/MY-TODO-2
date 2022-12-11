@@ -1,5 +1,5 @@
 import React from 'react';
-import {changeFilterType} from './App';
+import {ChangeFilterType} from './App';
 import {CheckBox} from './components/CheckBox';
 import {InputForm} from './components/InputForm';
 import {EditableSpan} from './components/EditableSpan';
@@ -16,9 +16,9 @@ type TodolistType = {
   tasks: TaskType[]
   addTask: (todolistId: string, title: string) => void
   removeTask: (todolistId: string, taskId: string) => void
-  changeFilter: (todolistId: string, value: changeFilterType) => void
+  changeFilter: (todolistId: string, value: ChangeFilterType) => void
   changeTaskStatus: (todolistId: string, taskId: string, value: boolean) => void
-  filter: changeFilterType
+  filter: ChangeFilterType
   removeTodolist: (todolistId: string) => void
   changeTaskTitle:(todolistId: string, taskId: string, title: string)=>void
 }

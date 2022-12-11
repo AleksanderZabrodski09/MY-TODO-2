@@ -7,9 +7,9 @@ import {InputForm} from './components/InputForm';
 export type TodolistType = {
   todolistId: string
   title: string
-  filter: changeFilterType
+  filter: ChangeFilterType
 }
-export type changeFilterType = 'all' | 'active' | 'completed'
+export type ChangeFilterType = 'all' | 'active' | 'completed'
 
 
 function App() {
@@ -64,7 +64,7 @@ const changeTaskTitle=(todolistId: string, taskId: string, title: string)=>{
     setTasks({...tasks,[newTodolistId]:[] })
   }
 
-  const changeFilter = (todolistId: string, value: changeFilterType) => {
+  const changeFilter = (todolistId: string, value: ChangeFilterType) => {
     setTodolists(todolists.map(tl => tl.todolistId === todolistId ? {...tl, filter: value} : tl))
   }
 
