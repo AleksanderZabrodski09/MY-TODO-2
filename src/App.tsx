@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
-import {InputForm} from './InputForm';
+import {InputForm} from './components/InputForm';
 
 export type TodolistType = {
   todolistId: string

@@ -1,8 +1,8 @@
 import React from 'react';
 import {changeFilterType} from './App';
-import {CheckBox} from './CheckBox';
-import {InputForm} from './InputForm';
-import {EditableSpan} from './EditableSpan';
+import {CheckBox} from './components/CheckBox';
+import {InputForm} from './components/InputForm';
+import {EditableSpan} from './components/EditableSpan';
 
 
 export type TaskType = {
