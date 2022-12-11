@@ -34,7 +34,7 @@ export const InputForm = ({addInput}: { addInput: (title: string) => void }) => 
       // className={error ? 'error' : ''}
       error={!!error}
       helperText={error}
-
+      label="title"
     />
     <Button
       onClick={addInputForm}
