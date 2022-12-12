@@ -22,7 +22,7 @@ beforeEach(() => {
   }
 )
 
-test('correct todolist should be added', () => {
+test.skip('correct todolist should be added', () => {
 
   const newTodolistTitle = 'New Todolist'
 
@@ -33,7 +33,7 @@ test('correct todolist should be added', () => {
 
 })
 
-test('correct todolist should be removed', () => {
+test.skip('correct todolist should be removed', () => {
 
   const endState = todolistsReducer(startState, removeTodolistAC(todolistId1))
 
@@ -41,7 +41,7 @@ test('correct todolist should be removed', () => {
   expect(endState[0].title).toBe('What to buy')
 })
 
-test('correct todolist should change its name', ()=>{
+test.skip('correct todolist should change its name', ()=>{
   const newTodolistTitle = 'New Todolist';
 
   const endState = todolistsReducer(startState, changeTodolistTitleAC(todolistId2, newTodolistTitle))
@@ -49,7 +49,7 @@ test('correct todolist should change its name', ()=>{
   expect(endState[0].title).toBe('What to learn')
   expect(endState[1].title).toBe('New Todolist')
 })
-test('correct todolist should change its name', ()=>{
+test.skip('correct todolist should change its name', ()=>{
   const newFilter: ChangeFilterType = 'completed';
 
   const endState = todolistsReducer(startState, changeTodolistFilterAC(todolistId2, newFilter))
