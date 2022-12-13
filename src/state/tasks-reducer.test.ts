@@ -1,5 +1,5 @@
 import {TaskPropsType} from '../App';
-import {addTaskAC, removeTaskAC, tasksReducer} from './tasks-reducer';
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './tasks-reducer';
 
 
 let startState: TaskPropsType
@@ -46,24 +46,19 @@ test('correct task should be added', () => {
   expect(endState['todolistId2'].length).toBe(3)
   expect(endState['todolistId1'][0].title).toBe('TS')
 })
-// test('correct todolist should change its name', () => {
+test('correct task should change its name', () => {
 
-  // let newTodolistTitle = 'New Todolist'
-  //
-  // const endState = todolistsReducer(startState, ChangeTodolistTitleAC(todolistId1, newTodolistTitle))
-  //
-  // expect(endState.length).toBe(2)
-  // expect(endState[0].title).toBe(newTodolistTitle)
-  // expect(endState[1].title).toBe('What to buy')
-// })
+  const endState = tasksReducer(startState, changeTaskTitleAC('todolistId2', '3', 'coffee'))
 
-// test('correct todolist should change its filter', ()=>{
+  expect(endState['todolistId1'][2].title).toBe('React')
+  expect(endState['todolistId2'][2].title).toBe('coffee')
 
-  // let newFilter: ChangeFilterType = 'completed'
-  //
-  // const endState = todolistsReducer(startState, ChangeTodolistFilterAC(todolistId1, newFilter))
-  //
-  // expect(endState.length).toBe(2)
-  // expect(endState[0].filter).toBe('completed')
-  // expect(endState[1].filter).toBe('all')
-// })
+})
+
+test('status of specified task should be changed', ()=>{
+
+  const endState=tasksReducer(startState, changeTaskStatusAC('todolistId1', '1', true))
+
+  expect(endState['todolistId1'][0].isDone).toBe(true)
+  expect(endState['todolistId2'][0].isDone).toBe(false)
+})
