@@ -1,11 +1,6 @@
 import {ChangeFilterType, TodolistsPropsType} from '../App';
 import {v1} from 'uuid';
-import React from 'react';
-// //
-// export type TodolistsReducerType = {
-//   type: string
-//   [key: string]: any
-// }
+
 export type TodolistsReducerType =
   | RemoveTodolistActionType
   | AddTodolistActionType
@@ -16,25 +11,6 @@ export type TodolistsReducerType =
 
 type RemoveTodolistActionType= ReturnType<typeof RemoveTodolistAC>
 type AddTodolistActionType = ReturnType<typeof AddTodolistAC>
-
-// type RemoveTodolistActionType = {
-//   type: 'REMOVE-TODOLIST'
-//   todolistId: string
-// }
-// type AddTodolistActionType = {
-//   type: 'ADD-TODOLIST'
-//   title: string
-// }
-// type ChangeTodolistTitle ={
-//   type: 'CHANGE-TODOLIST-TITLE'
-//   todolistId: string
-//   title: string
-// }
-// type ChangeTodolistFilter ={
-//   type: 'CHANGE-TODOLIST-FILTER'
-//   todolistId: string
-//   filter: ChangeFilterType
-// }
 
 export const todolistsReducer = (state: TodolistsPropsType[], action: TodolistsReducerType): TodolistsPropsType[] => {
   switch (action.type) {
