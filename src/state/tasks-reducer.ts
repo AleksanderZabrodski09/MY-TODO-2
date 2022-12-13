@@ -59,12 +59,15 @@
 
 import {TaskPropsType} from '../App';
 import {v1} from 'uuid';
+import {AddTodolistActionType, RemoveTodolistActionType} from './todolists-reducer';
 
 type TasksReducerActionType =
   | ReturnType<typeof removeTaskAC>
   | ReturnType<typeof addTaskAC>
   | ReturnType<typeof changeTaskTitleAC>
   | ReturnType<typeof changeTaskStatusAC>
+  | AddTodolistActionType
+  | RemoveTodolistActionType
 
 
 const initialState: TaskPropsType = {}
@@ -85,10 +88,28 @@ export const tasksReducer = (state = initialState, action: TasksReducerActionTyp
         }, ...state[action.payload.todolistId]]
       }
     case 'CHANGE-TASK-TITLE':
-      return {...state,[action.payload.todolistId]: state[action.payload.todolistId].map(t=>t.id===action.payload.askId?{...t, title:action.payload.title}:t)}
+      return {
+        ...state,
+        [action.payload.todolistId]: state[action.payload.todolistId].map(t => t.id === action.payload.askId ? {
+          ...t,
+          title: action.payload.title
+        } : t)
+      }
 
     case 'CHANGE-TASK-STATUS':
-      return {...state,[action.payload.todolistId]: state[action.payload.todolistId].map(t=>t.id===action.payload.askId?{...t, isDone:action.payload.isDone}:t)}
+      return {
+        ...state,
+        [action.payload.todolistId]: state[action.payload.todolistId].map(t => t.id === action.payload.askId ? {
+          ...t,
+          isDone: action.payload.isDone
+        } : t)
+      }
+
+    case 'REMOVE-TODOLIST':
+      delete state[action.payload.todolistId]
+      return {...state}
+    case 'ADD-TODOLIST':
+      return {...state, [action.payload.todolistId]: []}
     default:
       return state
   }
@@ -112,11 +133,11 @@ export const changeTaskTitleAC = (todolistId: string, askId: string, title: stri
   return {
     type: 'CHANGE-TASK-TITLE',
     payload: {todolistId, askId, title}
-  }as const
+  } as const
 }
 export const changeTaskStatusAC = (todolistId: string, askId: string, isDone: boolean) => {
   return {
     type: 'CHANGE-TASK-STATUS',
     payload: {todolistId, askId, isDone}
-  }as const
+  } as const
 }

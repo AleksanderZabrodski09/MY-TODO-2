@@ -1,5 +1,6 @@
 import {TaskPropsType} from '../App';
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './tasks-reducer';
+import {AddTodolistAC, RemoveTodolistAC} from './todolists-reducer';
 
 
 let startState: TaskPropsType
@@ -61,4 +62,26 @@ test('status of specified task should be changed', ()=>{
 
   expect(endState['todolistId1'][0].isDone).toBe(true)
   expect(endState['todolistId2'][0].isDone).toBe(false)
+})
+
+test('new array should be added when todolist is added', ()=>{
+
+  const endState=tasksReducer(startState, AddTodolistAC('new todolist'))
+
+  const keys=Object.keys(endState)
+  const newKey=keys.find(k=> k!='todolistId1' &&  k!='todolistId2')
+  if(!newKey)
+    throw Error('new key should be added')
+
+  expect(keys.length).toBe(3)
+  expect(endState[newKey]).toEqual([])
+})
+
+test('property with todolist deleted',()=>{
+  const endState=tasksReducer(startState, RemoveTodolistAC('todolistId2'))
+
+
+  const keys=Object.keys(endState)
+  expect(keys.length).toBe(1)
+  expect(endState['todolistId2']).not.toBeDefined()
 })

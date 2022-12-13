@@ -2,23 +2,23 @@ import {ChangeFilterType, TodolistsPropsType} from '../App';
 import {v1} from 'uuid';
 
 export type TodolistsReducerType =
-  | RemoveTodolistActionType
+  |  RemoveTodolistActionType
   | AddTodolistActionType
   // | ChangeTodolistTitle
   | ReturnType<typeof ChangeTodolistTitleAC>
   // | ChangeTodolistFilter
   | ReturnType<typeof ChangeTodolistFilterAC>
 
-type RemoveTodolistActionType= ReturnType<typeof RemoveTodolistAC>
-type AddTodolistActionType = ReturnType<typeof AddTodolistAC>
+export type RemoveTodolistActionType= ReturnType<typeof RemoveTodolistAC>
+export type AddTodolistActionType = ReturnType<typeof AddTodolistAC>
 
 export const todolistsReducer = (state: TodolistsPropsType[], action: TodolistsReducerType): TodolistsPropsType[] => {
   switch (action.type) {
     case 'REMOVE-TODOLIST':
       return state.filter(tl => tl.todolistId !== action.payload.todolistId)
     case 'ADD-TODOLIST': {
-      let newTodolistId = v1()
-      let newTodolist: TodolistsPropsType = {todolistId: newTodolistId, title: action.payload.title, filter: 'all'};
+      // let newTodolistId = v1()
+      let newTodolist: TodolistsPropsType = {todolistId: action.payload.todolistId, title: action.payload.title, filter: 'all'};
       return [newTodolist, ...state]
     }
     case 'CHANGE-TODOLIST-TITLE':{
@@ -42,7 +42,8 @@ export const RemoveTodolistAC=(todolistId:string) =>{
 export const AddTodolistAC=(title:string) =>{
   return {
     type: 'ADD-TODOLIST',
-    payload:{title}} as const
+    payload:{title, todolistId:v1()}
+  } as const
 }
 export const ChangeTodolistTitleAC=(todolistId:string,title:string) =>{
   return {
