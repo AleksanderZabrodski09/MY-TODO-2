@@ -53,6 +53,7 @@ export const tasksReducer = (state = initialState, action: TasksReducerActionTyp
       return {...state, [action.payload.todolistId]: []}
     default:
       return state
+      // throw new Error ('I don\'t understand this type ')
   }
 }
 
