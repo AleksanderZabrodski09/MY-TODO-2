@@ -11,8 +11,8 @@ import {
   ChangeTodolistTitleAC,
   RemoveTodolistAC,
 } from './state/todolists-reducer';
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
-import {useSelector} from 'react-redux';
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
+import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './state/store';
 
 
@@ -27,68 +27,42 @@ export type TaskPropsType = {
 }
 
 function AppWithRedux() {
-  const todolistId1 = v1();
-  const todolistId2 = v1();
-
-  // const [todolists, dispatchToTodolists] = useReducer(todolistsReducer,[
-  //   {todolistId: todolistId1, title: "What to learn?", filter: 'all'},
-  //   {todolistId: todolistId2, title: "What to buy?", filter: 'all'}
-  // ])
   const todolists = useSelector< AppRootStateType, TodolistsPropsType[]>(state=>state.todolists)
+  const tasks = useSelector<AppRootStateType, TaskPropsType>(state=>state.tasks)
+  const dispatch = useDispatch();
+  // const todolistId1 = v1();
+  // const todolistId2 = v1();
 
   const addTodolist = (title: string) => {
     const action= AddTodolistAC(title)
-    dispatchToTodolists(action)
-    dispatchToTasks(action)
+    dispatch(action)
+
   }
   const changeTodolistTitle = (todolistId: string, title: string) => {
-    dispatchToTodolists(ChangeTodolistTitleAC(todolistId,title))
+    dispatch(ChangeTodolistTitleAC(todolistId,title))
   }
   const removeTodolist = (todolistId: string) => {
     const action= RemoveTodolistAC(todolistId)
-    dispatchToTodolists(action)
-    // delete tasks[todolistId]
-    dispatchToTasks(action)
+    dispatch(action)
   }
   console.log(todolists)
-  // console.log(tasks)
+  console.log(tasks)
   const changeFilter = (todolistId: string, value: ChangeFilterType) => {
-    dispatchToTodolists(ChangeTodolistFilterAC(todolistId,value))
-
+    dispatch(ChangeTodolistFilterAC(todolistId,value))
   }
-
-  // const [tasks, dispatchToTasks] = useReducer(tasksReducer,{
-  //     [todolistId1]: [
-  //       {id: v1(), title: "HTML&CSS", isDone: true},
-  //       {id: v1(), title: "JS", isDone: true},
-  //       {id: v1(), title: "ReactJS", isDone: false},
-  //       {id: v1(), title: "TS", isDone: false}
-  //     ],
-  //     [todolistId2]: [
-  //       {id: v1(), title: "bread", isDone: true},
-  //       {id: v1(), title: "milk", isDone: true},
-  //       {id: v1(), title: "chocolate", isDone: false}
-  //     ],
-  //   }
-  // )
-
-  const tasks = useSelector<AppRootStateType, TaskPropsType>(state=>state.tasks)
 
   const removeTask = (todolistId: string, taskId: string) => {
-    dispatchToTasks(removeTaskAC(todolistId,taskId))
+    dispatch(removeTaskAC(todolistId,taskId))
   }
   const addTask = (todolistId: string, newTitle: string) => {
-    dispatchToTasks(removeTaskAC(todolistId,newTitle))
+    dispatch(addTaskAC(todolistId,newTitle))
   }
   const changeTaskStatus = (todolistId: string, taskId: string, value: boolean) => {
-    dispatchToTasks(changeTaskStatusAC(todolistId,taskId,value))
+    dispatch(changeTaskStatusAC(todolistId,taskId,value))
   }
   const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
-    dispatchToTasks(changeTaskTitleAC(todolistId,taskId,title))
+    dispatch(changeTaskTitleAC(todolistId,taskId,title))
   }
-
-
-
 
   return (
     <div className="App">
@@ -107,8 +81,8 @@ function AppWithRedux() {
                 if (tl.filter === 'completed') {
                   tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true)
                 }
-                return <Grid item>
-                  <Paper style={{padding:'10px'}}>
+                return <Grid item  key={tl.todolistId}>
+                  <Paper style={{padding:'10px'}} >
                     <Todolist
                       key={tl.todolistId}
                       todolistId={tl.todolistId}
@@ -129,11 +103,7 @@ function AppWithRedux() {
             )
           }
         </Grid>
-
-
       </Container>
-
-
     </div>
   );
 }

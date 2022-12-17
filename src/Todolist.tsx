@@ -60,7 +60,6 @@ export const Todolist: React.FC<TodolistType> = (props) => {
     <div>
       <h3>
         <EditableSpan value={props.title} callBack={changeTodolistTitleHandler}/>
-        {/*{props.title}*/}
         <Button onClick={removeTodolistHandler} >
           <DeleteForeverIcon/></Button>
       </h3>
