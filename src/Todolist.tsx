@@ -6,6 +6,11 @@ import {EditableSpan} from './componets/EditableSpan';
 import {Button} from '@mui/material';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppRootStateType} from './state/store';
+import {TaskPropsType} from './AppWithRedux';
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './state/tasks-reducer';
+import {ChangeTodolistFilterAC} from './state/todolists-reducer';
 
 export type TasksType = {
   id: string
@@ -16,32 +21,33 @@ export type TasksType = {
 type TodolistType = {
   todolistId: string
   title: string
-  tasks: TasksType[]
-  removeTask: (todolistId: string, taskId: string) => void
-  changeFilter: (todolistId: string, value: ChangeFilterType) => void
-  addTask: (todolistId: string, newTitle: string) => void
-  changeTaskStatus: (todolistId: string, taskId: string, value: boolean) => void
-  changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
   filter: ChangeFilterType
+  changeFilter: (todolistId: string, value: ChangeFilterType) => void
   removeTodolist: (todolistId: string) => void
   changeTodolistTitle: (todolistId: string, title: string) => void
+  // tasks: TasksType[]
+  // addTask: (todolistId: string, newTitle: string) => void
+  // removeTask: (todolistId: string, taskId: string) => void
+  // changeTaskStatus: (todolistId: string, taskId: string, value: boolean) => void
+  // changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
 }
 
 
 export const Todolist: React.FC<TodolistType> = (props) => {
-
+  const tasks = useSelector<AppRootStateType, TasksType[]>(state=>state.tasks[props.todolistId])
+  const dispatch = useDispatch();
 
   const addTask = (newTitle: string) => {
-    props.addTask(props.todolistId, newTitle)
+    dispatch(addTaskAC(props.todolistId, newTitle))
   }
   const removeTaskHandler = (tID: string) => {
-    props.removeTask(props.todolistId, tID)
+    dispatch(removeTaskAC(props.todolistId, tID))
   }
   const changeTaskStatus = (tID: string, eValue: boolean) => {
-    props.changeTaskStatus(props.todolistId, tID, eValue)
+    dispatch(changeTaskStatusAC(props.todolistId, tID, eValue))
   }
   const changeTaskTitle = (tID: string, newTitle: string) => {
-    props.changeTaskTitle(props.todolistId, tID, newTitle)
+    dispatch(changeTaskTitleAC(props.todolistId, tID, newTitle))
   }
 
   const removeTodolistHandler = () => {
@@ -56,6 +62,14 @@ export const Todolist: React.FC<TodolistType> = (props) => {
   const completedClickFilter = () => props.changeFilter(props.todolistId, 'completed')
 
 
+  let tasksForTodolist = tasks;
+  if (props.filter === 'active') {
+    tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false)
+  }
+  if (props.filter === 'completed') {
+    tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true)
+  }
+
   return (
     <div>
       <h3>
@@ -67,7 +81,7 @@ export const Todolist: React.FC<TodolistType> = (props) => {
 
       <div>
         {
-          props.tasks.map(t => {
+          tasks.map(t => {
 
             return (
               <div key={t.id} className={t.isDone ? 'taskCompleted' : ''}>
@@ -103,7 +117,6 @@ export const Todolist: React.FC<TodolistType> = (props) => {
         <Button
           onClick={completedClickFilter}
           variant={props.filter === 'completed' ? 'contained' : 'outlined'} color='error' size='small'
-
         >Completed
         </Button>
       </div>
