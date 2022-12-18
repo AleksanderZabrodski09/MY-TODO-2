@@ -129,5 +129,5 @@ const changeTaskTitle=(todolistId: string, taskId: string, title: string)=>{
   );
 }
 
-export default App;
+export default AppWithReducer;
 
