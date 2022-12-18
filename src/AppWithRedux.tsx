@@ -38,37 +38,33 @@ function AppWithRedux() {
   const dispatch=useDispatch()
 
   const addTask = (todolistId: string, title: string) => {
-    dispathToTasks(addTaskAC(todolistId, title))
+    dispatch(addTaskAC(todolistId, title))
 
   }
   const removeTask = (todolistId: string, taskId: string) => {
-    dispathToTasks(removeTaskAC(todolistId, taskId))
+    dispatch(removeTaskAC(todolistId, taskId))
   }
   const changeTaskStatus = (todolistId: string, taskId: string, value: boolean) => {
-    dispathToTasks(changeTasksStatusAC(todolistId, taskId, value))
+    dispatch(changeTasksStatusAC(todolistId, taskId, value))
   }
   const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
-    dispathToTasks(changeTasksTitleAC(todolistId, taskId, title))
+    dispatch(changeTasksTitleAC(todolistId, taskId, title))
   }
 
   const removeTodolist = (todolistId: string) => {
-    const action = removeTodolistAC(todolistId)
-    dispathToTodolist(action)
-    dispathToTasks(action)
+    dispatch(removeTodolistAC(todolistId))
   }
 
   const addTodolist = (newTitle: string) => {
-    const action = addTodolistAC(newTitle)
-    dispathToTodolist(action)
-    dispathToTasks(action)
+    dispatch(addTodolistAC(newTitle))
   }
 
   const changeFilter = (todolistId: string, value: ChangeFilterType) => {
-    dispathToTodolist(changeTodolistFilterAC(todolistId, value))
+    dispatch(changeTodolistFilterAC(todolistId, value))
   }
 
   const changeTodolistTitle = (todolistId: string, title: string) => {
-    dispathToTodolist(changeTodolistTitleAC(todolistId, title))
+    dispatch(changeTodolistTitleAC(todolistId, title))
   }
 
   return (
