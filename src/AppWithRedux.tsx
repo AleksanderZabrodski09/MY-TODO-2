@@ -37,32 +37,15 @@ function AppWithRedux() {
 
   const dispatch=useDispatch()
 
-  // const addTask = (todolistId: string, title: string) => {
-  //   dispatch(addTaskAC(todolistId, title))
-  //
-  // }
-  // const removeTask = (todolistId: string, taskId: string) => {
-  //   dispatch(removeTaskAC(todolistId, taskId))
-  // }
-  // const changeTaskStatus = (todolistId: string, taskId: string, value: boolean) => {
-  //   dispatch(changeTasksStatusAC(todolistId, taskId, value))
-  // }
-  // const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
-  //   dispatch(changeTasksTitleAC(todolistId, taskId, title))
-  // }
-
   const removeTodolist = (todolistId: string) => {
     dispatch(removeTodolistAC(todolistId))
   }
-
   const addTodolist = (newTitle: string) => {
     dispatch(addTodolistAC(newTitle))
   }
-
   const changeFilter = (todolistId: string, value: ChangeFilterType) => {
     dispatch(changeTodolistFilterAC(todolistId, value))
   }
-
   const changeTodolistTitle = (todolistId: string, title: string) => {
     dispatch(changeTodolistTitleAC(todolistId, title))
   }
@@ -78,28 +61,12 @@ function AppWithRedux() {
         <Grid container spacing={3}>
           {
             todolists.map(tl => {
-                // let tasksForTodolist = tasks[tl.todolistId]
-                // if (tl.filter === 'active') {
-                //   tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true)
-                // }
-                // if (tl.filter === 'completed') {
-                //   tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false)
-                // }
+
                 return <Grid item key={tl.todolistId}>
                   <Paper style={{padding: '10px'}}>
                     <TodolistWithDispatch
                     todolist={tl}
-                      // todolistId={tl.todolistId}
-                      // title={tl.title}
-                      // tasks={tasksForTodolist}
-                      // addTask={addTask}
-                      // removeTask={removeTask}
-                      // changeTaskStatus={changeTaskStatus}
-                      // changeTaskTitle={changeTaskTitle}
-                      // changeFilter={changeFilter}
-                      // filter={tl.filter}
-                      // removeTodolist={removeTodolist}
-                      // changeTodolistTitle={changeTodolistTitle}
+
                     /></Paper>
                 </Grid>
               }
