@@ -6,7 +6,7 @@ import PlaylistRemoveRoundedIcon from '@mui/icons-material/PlaylistRemoveRounded
 import {TodolistType} from './AppWithRedux';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootReducerType} from './state/store';
-import {addTaskAC, changeTasksStatusAC, changeTasksTitleAC, removeTaskAC} from './state/tasks-reducer';
+import {addTaskAC} from './state/tasks-reducer';
 import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from './state/todolists-reducer';
 import {Task} from './Task';
 
@@ -36,9 +36,9 @@ export const TodolistWithDispatch = memo(({todolist}: PropsType) => {
   const removeTodolistHandler = () => {
     dispatch(removeTodolistAC(todolistId))
   }
-  const changeTodolistTitleHandler = (title: string) => {
+  const changeTodolistTitleHandler = useCallback((title: string) => {
     dispatch(changeTodolistTitleAC(todolistId, title))
-  }
+  },[dispatch])
 
 
   const addTaskHandler = useCallback((newTitle: string) => {
@@ -79,9 +79,6 @@ export const TodolistWithDispatch = memo(({todolist}: PropsType) => {
               key={t.id}
               task={t}
               todolistId={todolistId}
-              // removeTask={removeTaskHandler}
-              // changeTaskTitleHandler={changeTaskTitleHandler}
-              // onChangeTaskStatusHandler={onChangeTaskStatusHandler}
             />
           )
         })

@@ -1,7 +1,8 @@
-import React, {ChangeEvent, useState,KeyboardEvent} from 'react';
+import React, {ChangeEvent, useState, KeyboardEvent, memo} from 'react';
 import {TextField} from '@mui/material';
 
-export const EditableSpan = ({value,callback }: { value: string, callback:(newTitle:string)=>void }) => {
+export const EditableSpan = memo(({value,callback }: { value: string, callback:(newTitle:string)=>void }) => {
+  console.log('EditableSpan')
   const [editMode, setEditMode] = useState(false)
   const [title, setTitle] = useState(value)
 
@@ -33,4 +34,4 @@ export const EditableSpan = ({value,callback }: { value: string, callback:(newTi
       autoFocus
     />
     : <span onDoubleClick={activeEditMode}>{title}</span>
-}
+})

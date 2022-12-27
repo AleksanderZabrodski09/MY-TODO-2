@@ -7,10 +7,7 @@ import {TaskType} from './TodolistWithRedux';
 import {useDispatch} from 'react-redux';
 import {changeTasksStatusAC, changeTasksTitleAC, removeTaskAC} from './state/tasks-reducer';
 
-// type TaskPropsType = {
-//   task: TaskType
-//   todolistId: string
-// }
+
 
 export const Task = memo(({task, todolistId}: { task: TaskType, todolistId:string }) => {
   console.log('Task')
