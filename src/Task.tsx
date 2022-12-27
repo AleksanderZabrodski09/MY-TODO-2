@@ -2,25 +2,33 @@ import {CheckBox} from './components/CheckBox';
 import {EditableSpan} from './components/EditableSpan';
 import {Button} from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import React from 'react';
+import React, {memo, useCallback} from 'react';
 import {TaskType} from './TodolistWithRedux';
+import {useDispatch} from 'react-redux';
+import {changeTasksStatusAC, changeTasksTitleAC, removeTaskAC} from './state/tasks-reducer';
 
-export const Task = ({
-                       task,
-                       removeTask,
-                       onChangeTaskStatusHandler,
-                       changeTaskTitleHandler
-                     }: { task: TaskType, removeTask: (tID: string) => void, onChangeTaskStatusHandler: (tID: string, eValue: boolean) => void, changeTaskTitleHandler: (tID: string, title: string) => void }) => {
+// type TaskPropsType = {
+//   task: TaskType
+//   todolistId: string
+// }
 
+export const Task = memo(({task, todolistId}: { task: TaskType, todolistId:string }) => {
+  console.log('Task')
+// removeTask: (tID: string) => void, onChangeTaskStatusHandler: (tID: string, eValue: boolean) => void, changeTaskTitleHandler: (tID: string, title: string) => void }
+  // removeTask,
+  // onChangeTaskStatusHandler,
+  // changeTaskTitleHandler
+  const dispatch = useDispatch()
+  const {id, title, isDone}= task
 
-  return <div key={task.id} className={task.isDone ? 'isCompleted' : ''}>
-    <CheckBox checked={task.isDone} callBack={(eValue) => onChangeTaskStatusHandler(task.id, eValue)}/>
-    <EditableSpan value={task.title} callback={(newTitle) => changeTaskTitleHandler(task.id, newTitle)}/>
+  return <div  className={isDone ? 'isCompleted' : ''}>
+    <CheckBox checked={isDone} callBack={(eValue) => dispatch(changeTasksStatusAC(todolistId,id, eValue))}/>
+    <EditableSpan value={title} callback={(newTitle) => dispatch(changeTasksTitleAC(todolistId,id, newTitle))}/>
     <Button
-      onClick={() => removeTask(task.id)}
+      onClick={() => dispatch(removeTaskAC(todolistId,id))}
       color='secondary'
     ><HighlightOffIcon/>
       {/*✖*/}
       ️</Button>
   </div>
-}
+})

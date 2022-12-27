@@ -45,15 +45,15 @@ export const TodolistWithDispatch = ({todolist}: PropsType) => {
     dispatch(addTaskAC(todolistId, newTitle))
   },[todolistId])
 
-  const removeTaskHandler = (tID: string) => {
-    dispatch(removeTaskAC(todolistId, tID))
-  }
-  const onChangeTaskStatusHandler = (tID: string, eValue: boolean) => {
-    dispatch(changeTasksStatusAC(todolistId, tID, eValue))
-  }
-  const changeTaskTitleHandler = (tID: string, title: string) => {
-    dispatch(changeTasksTitleAC(todolistId, tID, title))
-  }
+  // const removeTaskHandler = (tID: string) => {
+  //   dispatch(removeTaskAC(todolistId, tID))
+  // }
+  // const onChangeTaskStatusHandler = (tID: string, eValue: boolean) => {
+  //   dispatch(changeTasksStatusAC(todolistId, tID, eValue))
+  // }
+  // const changeTaskTitleHandler = (tID: string, title: string) => {
+  //   dispatch(changeTasksTitleAC(todolistId, tID, title))
+  // }
 
   const allChangeFilterTasks = () => dispatch(changeTodolistFilterAC(todolistId, 'all'))
   const activeChangeFilterTasks = () => dispatch(changeTodolistFilterAC(todolistId, 'active'))
@@ -78,9 +78,10 @@ export const TodolistWithDispatch = ({todolist}: PropsType) => {
             <Task
               key={t.id}
               task={t}
-              removeTask={removeTaskHandler}
-              changeTaskTitleHandler={changeTaskTitleHandler}
-              onChangeTaskStatusHandler={onChangeTaskStatusHandler}
+              todolistId={todolistId}
+              // removeTask={removeTaskHandler}
+              // changeTaskTitleHandler={changeTaskTitleHandler}
+              // onChangeTaskStatusHandler={onChangeTaskStatusHandler}
             />
           )
         })
