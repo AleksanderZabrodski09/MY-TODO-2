@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {InputForm} from './components/InputForm';
 import {EditableSpan} from './components/EditableSpan';
 import {Button} from '@mui/material';
@@ -41,10 +41,10 @@ export const TodolistWithDispatch = ({todolist}: PropsType) => {
   }
 
 
-  const addTaskHandler = (newTitle: string) => {
+  const addTaskHandler = useCallback((newTitle: string) => {
     dispatch(addTaskAC(todolistId, newTitle))
+  },[todolistId])
 
-  }
   const removeTaskHandler = (tID: string) => {
     dispatch(removeTaskAC(todolistId, tID))
   }
@@ -76,6 +76,7 @@ export const TodolistWithDispatch = ({todolist}: PropsType) => {
 
           return (
             <Task
+              key={t.id}
               task={t}
               removeTask={removeTaskHandler}
               changeTaskTitleHandler={changeTaskTitleHandler}
