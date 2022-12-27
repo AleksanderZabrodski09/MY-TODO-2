@@ -37,18 +37,18 @@ function AppWithRedux() {
 
   const dispatch=useDispatch()
 
-  const removeTodolist = (todolistId: string) => {
+  const removeTodolist = useCallback((todolistId: string) => {
     dispatch(removeTodolistAC(todolistId))
-  }
+  },[dispatch])
   const addTodolist = useCallback((newTitle: string) => {
     dispatch(addTodolistAC(newTitle))
   },[dispatch])
-  const changeFilter = (todolistId: string, value: ChangeFilterType) => {
+  const changeFilter = useCallback((todolistId: string, value: ChangeFilterType) => {
     dispatch(changeTodolistFilterAC(todolistId, value))
-  }
-  const changeTodolistTitle = (todolistId: string, title: string) => {
+  },[dispatch])
+  const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
     dispatch(changeTodolistTitleAC(todolistId, title))
-  }
+  },[dispatch])
 
   return (
     <div className="App">

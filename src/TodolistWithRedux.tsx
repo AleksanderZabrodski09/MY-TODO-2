@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {memo, useCallback} from 'react';
 import {InputForm} from './components/InputForm';
 import {EditableSpan} from './components/EditableSpan';
 import {Button} from '@mui/material';
@@ -18,7 +18,7 @@ export type TaskType = {
 type PropsType = {
   todolist: TodolistType
 }
-export const TodolistWithDispatch = ({todolist}: PropsType) => {
+export const TodolistWithDispatch = memo(({todolist}: PropsType) => {
   const {todolistId, title, filter} = todolist
 
   let tasks = useSelector<AppRootReducerType, TaskType[]>(store => store.tasks[todolistId])
@@ -112,6 +112,6 @@ export const TodolistWithDispatch = ({todolist}: PropsType) => {
       </Button>
     </div>
   </div>
-}
+})
 
 
