@@ -1,8 +1,9 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import {Button, TextField} from '@mui/material';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
-export const InputForm = ({addInput}: { addInput: (title: string) => void }) => {
+export const InputForm = memo(({addInput}: { addInput: (title: string) => void }) => {
+  console.log('InputForm')
 
   const [title, setTitle] = useState('')
   const [error, setError] = useState<null | string>(null)
@@ -16,10 +17,10 @@ export const InputForm = ({addInput}: { addInput: (title: string) => void }) => 
     }
   }
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if(error)setError(null)
     if (e.key === 'Enter') {
       addInputForm()
     }
-    setError('')
   }
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value)
@@ -44,4 +45,4 @@ export const InputForm = ({addInput}: { addInput: (title: string) => void }) => 
     </Button>
     {/*{error && <div className={'errorMessage'}>{error}</div>}*/}
   </div>
-}
+})
