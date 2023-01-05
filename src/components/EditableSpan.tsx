@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState, KeyboardEvent, memo} from 'react';
 import {TextField} from '@mui/material';
 
 export const EditableSpan = memo(({value,callback }: { value: string, callback:(newTitle:string)=>void }) => {
-  console.log('EditableSpan')
+
   const [editMode, setEditMode] = useState(false)
   const [title, setTitle] = useState(value)
 
