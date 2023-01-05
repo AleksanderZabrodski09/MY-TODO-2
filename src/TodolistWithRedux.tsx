@@ -1,9 +1,9 @@
-import React, {memo, useCallback} from 'react';
+import React, {FC, memo, useCallback} from 'react';
 import {InputForm} from './components/InputForm';
 import {EditableSpan} from './components/EditableSpan';
 import {Button} from '@mui/material';
 import PlaylistRemoveRoundedIcon from '@mui/icons-material/PlaylistRemoveRounded';
-import {TodolistType} from './AppWithRedux';
+import {ChangeFilterType, TodolistType} from './AppWithRedux';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootReducerType} from './state/store';
 import {addTaskAC} from './state/tasks-reducer';
@@ -85,14 +85,19 @@ export const TodolistWithDispatch = memo(({todolist}: PropsType) => {
       }
     </div>
     <div>
-      <Button onClick={allChangeFilterTasks}
-        // className={props.filter === 'all' ? 'activeFilter' : 'buttonFilter'}
-              className='buttonFilter'
-              variant={filter === 'all' ? 'outlined' : 'text'}
-              color='secondary'
-              size='small'
-      >All
-      </Button>
+      <ButtonUC
+        title={'All'}
+        onClick={allChangeFilterTasks}
+        variant={filter === 'all' ? 'outlined' : 'text'}
+        color={'secondary'}
+        size={'small'}
+      />
+      {/*<Button onClick={allChangeFilterTasks}*/}
+      {/*  // className={props.filter === 'all' ? 'activeFilter' : 'buttonFilter'}*/}
+      {/*        className='buttonFilter'*/}
+      {/*       */}
+      {/*>All*/}
+      {/*</Button>*/}
       <Button onClick={activeChangeFilterTasks}
               className='buttonFilter'
               variant={filter === 'active' ? 'outlined' : 'text'}
@@ -111,4 +116,23 @@ export const TodolistWithDispatch = memo(({todolist}: PropsType) => {
   </div>
 })
 
+
+type ButtonFilterUC ={
+  title:string
+  onClick:()=>void
+  variant: 'text' | 'outlined' | 'contained'
+  color:'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'
+  size:'small' | 'medium' | 'large'
+}
+
+export const ButtonUC:FC<ButtonFilterUC> =(props)=>{
+  return    <Button onClick={props.onClick}
+                    // className='buttonFilter'
+                    variant={props.variant}
+                    color={props.color}
+                    size={props.size}
+  >{props.title}
+  </Button>
+
+}
 
