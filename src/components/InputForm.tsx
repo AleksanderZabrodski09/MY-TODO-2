@@ -32,7 +32,6 @@ export const InputForm = memo(({addInput}: { addInput: (title: string) => void }
       value={title}
       onChange={onChangeHandler}
       onKeyPress={onKeyPressHandler}
-      // className={error ? 'error' : ''}
       error={!!error}
       helperText={error}
       label="title"
