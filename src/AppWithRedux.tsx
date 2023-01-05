@@ -1,6 +1,6 @@
-import React, {useCallback, useReducer, useState} from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
-import {TaskType, Todolist} from './Todolist';
+import {TaskType} from './Todolist';
 import {v1} from 'uuid';
 import {InputForm} from './components/InputForm';
 import ButtonAppBar from './components/AppBar';
@@ -9,11 +9,8 @@ import {
   addTodolistAC,
   changeTodolistFilterAC,
   changeTodolistTitleAC,
-  removeTodolistAC,
-  todolistsReducer
+  removeTodolistAC
 } from './state/todolists-reducer';
-import {addTaskAC, changeTasksStatusAC, changeTasksTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
-import App from './App';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootReducerType} from './state/store';
 import {TodolistWithDispatch} from './TodolistWithRedux';
@@ -30,8 +27,8 @@ export type ChangeFilterType = 'all' | 'active' | 'completed'
 
 
 function AppWithRedux() {
-  const todolistId1 = v1();
-  const todolistId2 = v1();
+  // const todolistId1 = v1();
+  // const todolistId2 = v1();
 
   const todolists = useSelector<AppRootReducerType, TodolistType[]>((store) => store.todolists)
 
