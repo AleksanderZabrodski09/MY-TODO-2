@@ -3,7 +3,7 @@ import {Button, TextField} from '@mui/material';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
 export const InputForm = memo(({addInput}: { addInput: (title: string) => void }) => {
-  console.log('InputForm')
+
 
   const [title, setTitle] = useState('')
   const [error, setError] = useState<null | string>(null)
