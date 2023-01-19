@@ -6,15 +6,6 @@ export default {
   title: 'API'
 }
 
-const settings = {
-  withCredentials: true,
-  headers: {
-    'API-KEY': '5983a517-e387-4f12-ac5e-a15dd0cef3b7'
-  }
-
-}
-
-
 export const GetTodolists = () => {
   const [state, setState] = useState<any>(null)
   useEffect(() => {
@@ -62,7 +53,7 @@ export const DeleteTodolists = () => {
     let todolistId = 'b1235642-43c5-4b39-844c-248741036d90';
    todolistAPI.deleteTodolist(todolistId)
       .then((res) => {
-        setState(res.data)
+        setState(res)
       })
 
   }, [])
