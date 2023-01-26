@@ -1,6 +1,6 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer} from 'react';
 import './App.css';
-import {TaskType, Todolist} from './Todolist';
+import {Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {InputForm} from './components/InputForm';
 import ButtonAppBar from './components/AppBar';
@@ -13,13 +13,9 @@ import {
   todolistsReducer
 } from './state/todolists-reducer';
 import {addTaskAC, changeTasksStatusAC, changeTasksTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
-import App from './App';
+import {TaskPriorities, TaskStatuses, TaskType} from './api/todolist-api';
 
-export type TodolistType = {
-  todolistId: string
-  title: string
-  filter: ChangeFilterType
-}
+
 export type TasksStateType={
   [key:string]:TaskType[]
 }
@@ -31,59 +27,158 @@ function AppWithReducer() {
   const todolistId1 = v1();
   const todolistId2 = v1();
 
-  const [todolists, dispathToTodolist] = useReducer(todolistsReducer,[
-    {todolistId: todolistId1, title: 'What to learn', filter: 'all'},
-    {todolistId: todolistId2, title: 'What to buy', filter: 'all'},
+  const [todolists, dispatchToTodolist] = useReducer(todolistsReducer,[
+    {id: todolistId1, title: 'What to learn', filter: 'all',addedDate: '', order: 0},
+    {id: todolistId2, title: 'What to buy', filter: 'all',addedDate: '', order: 0},
   ])
 
-  const [tasks, dispathToTasks] = useReducer(tasksReducer,{
+  const [tasks, dispatchToTasks] = useReducer(tasksReducer,{
     [todolistId1]: [
-      {id: v1(), title: "HTML&CSS", isDone: true},
-      {id: v1(), title: "JS", isDone: true},
-      {id: v1(), title: "ReactJS", isDone: false},
-      {id: v1(), title: "ReactTS", isDone: true},
-      {id: v1(), title: "TS", isDone: false}
+      {
+        id: v1(),
+        title: "HTML&CSS",
+        status: TaskStatuses.Completed,
+        description: '',
+        order: 0,
+        addedDate: '',
+        todoListId: todolistId1,
+        priority: TaskPriorities.Hi,
+        startDate: '',
+        deadline: ''
+      },
+      {
+        id: v1(),
+        title: "JS",
+        status: TaskStatuses.Completed,
+        order: 0,
+        addedDate: '',
+        todoListId: todolistId1,
+        priority: TaskPriorities.Hi,
+        startDate: '',
+        deadline: '',
+        description: ''
+      },
+      {
+        id: v1(),
+        title: "ReactJS",
+        status: TaskStatuses.New,
+        order: 0,
+        addedDate: '',
+        todoListId: todolistId1,
+        priority: TaskPriorities.Hi,
+        startDate: '',
+        deadline: '',
+        description: ''
+      },
+      {
+        id: v1(),
+        title: "ReactTS",
+        status: TaskStatuses.Completed,
+        order: 0,
+        addedDate: '',
+        todoListId: todolistId1,
+        priority: TaskPriorities.Low,
+        startDate: '',
+        deadline: '',
+        description: ''
+      },
+      {
+        id: v1(),
+        title: "TS",
+        status: TaskStatuses.New,
+        order: 0,
+        addedDate: '',
+        todoListId: todolistId1,
+        priority: TaskPriorities.Hi,
+        startDate: '',
+        deadline: '',
+        description: ''
+      }
     ],
     [todolistId2]: [
-      {id: v1(), title: "milk", isDone: true},
-      {id: v1(), title: "kefir", isDone: true},
-      {id: v1(), title: "curs", isDone: false},
-      {id: v1(), title: "socks", isDone: false}
+      {
+        id: v1(),
+        title: "milk",
+        status: TaskStatuses.Completed,
+        order: 0,
+        addedDate: '',
+        todoListId: todolistId2,
+        priority: TaskPriorities.Hi,
+        startDate: '',
+        deadline: '',
+        description: ''
+      },
+      {
+        id: v1(),
+        title: "kefir",
+        status: TaskStatuses.Completed,
+        order: 0,
+        addedDate: '',
+        todoListId: todolistId2,
+        priority: TaskPriorities.Hi,
+        startDate: '',
+        deadline: '',
+        description: ''
+      },
+      {
+        id: v1(),
+        title: "curs",
+        status: TaskStatuses.New,
+        order: 0,
+        addedDate: '',
+        todoListId: todolistId2,
+        priority: TaskPriorities.Hi,
+        startDate: '',
+        deadline: '',
+        description: ''
+      },
+      {
+        id: v1(),
+        title: "socks",
+        status: TaskStatuses.New,
+        order: 0,
+        addedDate: '',
+        todoListId: todolistId2,
+        priority: TaskPriorities.Hi,
+        startDate: '',
+        deadline: '',
+        description: ''
+      }
     ],
   })
 
   const addTask = (todolistId: string, title: string) => {
-    dispathToTasks(addTaskAC(todolistId,title))
+    dispatchToTasks(addTaskAC(todolistId,title))
 
   }
   const removeTask = (todolistId: string, taskId: string) => {
-    dispathToTasks(removeTaskAC(todolistId,taskId))
+    dispatchToTasks(removeTaskAC(todolistId,taskId))
   }
-  const changeTaskStatus = (todolistId: string, taskId: string, value: boolean) => {
-     dispathToTasks(changeTasksStatusAC(todolistId,taskId,value))
+  const changeTaskStatus = (todolistId: string, taskId: string, value: TaskStatuses) => {
+    dispatchToTasks(changeTasksStatusAC(todolistId,taskId,value))
   }
 const changeTaskTitle=(todolistId: string, taskId: string, title: string)=>{
-     dispathToTasks(changeTasksTitleAC(todolistId,taskId,title))
+  dispatchToTasks(changeTasksTitleAC(todolistId,taskId,title))
 }
 
   const removeTodolist = (todolistId: string) => {
     const action = removeTodolistAC(todolistId)
-    dispathToTodolist(action)
-    dispathToTasks(action)
+    dispatchToTodolist(action)
+    dispatchToTasks(action)
   }
 
   const addTodolist = (newTitle: string) => {
     const action = addTodolistAC(newTitle)
-    dispathToTodolist(action)
-    dispathToTasks(action)
+    dispatchToTodolist(action)
+    dispatchToTasks(action)
   }
 
   const changeFilter = (todolistId: string, value: ChangeFilterType) => {
-    dispathToTodolist(changeTodolistFilterAC(todolistId,value))
+    dispatchToTodolist(changeTodolistFilterAC(todolistId,value))
   }
 
   const changeTodolistTitle=(todolistId: string,title: string)=>{
-    dispathToTodolist(changeTodolistTitleAC(todolistId,title))
+    dispatchToTodolist(changeTodolistTitleAC(todolistId,title))
   }
 
   return (
@@ -96,18 +191,18 @@ const changeTaskTitle=(todolistId: string, taskId: string, title: string)=>{
 
         <Grid  container spacing={3}>
           {
-          todolists.map(tl => {
-              let tasksForTodolist = tasks[tl.todolistId]
+          todolists.map((tl) => {
+              let tasksForTodolist = tasks[tl.id]
               if (tl.filter === 'active') {
-                tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true)
+                tasksForTodolist = tasksForTodolist.filter(t => t.status === TaskStatuses.Completed)
               }
               if (tl.filter === 'completed') {
-                tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false)
+                tasksForTodolist = tasksForTodolist.filter(t => t.status === TaskStatuses.New)
               }
               return <Grid item>
                 <Paper style={{padding:'10px'}}><Todolist
-                  key={tl.todolistId}
-                  todolistId={tl.todolistId}
+                  key={tl.id}
+                  todolistId={tl.id}
                   title={tl.title}
                   tasks={tasksForTodolist}
                   addTask={addTask}

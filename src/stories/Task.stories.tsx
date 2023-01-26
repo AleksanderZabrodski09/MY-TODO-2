@@ -1,13 +1,10 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import {InputForm} from '../components/InputForm';
-import {action} from '@storybook/addon-actions';
 import {Task} from '../components/Task';
-import {v1} from 'uuid';
 import {ReduxStoreProviderDecorator} from './ReduxStoreProviderDecorator';
 import {useSelector} from 'react-redux';
-import {TaskType} from '../TodolistWithRedux';
 import {AppRootReducerType} from '../state/store';
+import {TaskType} from '../api/todolist-api';
 
 
 export default {
@@ -27,5 +24,5 @@ const TaskWithReduxStory = ()=>{
 
 const Template: ComponentStory<typeof Task> = (args) => <TaskWithReduxStory />;
 
-export const TaskIsDoneStory = Template.bind({});
+export const TaskStatusStory = Template.bind({});
 

@@ -7,49 +7,51 @@ import {TodolistType} from './AppWithRedux';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootReducerType} from './state/store';
 import {addTaskAC} from './state/tasks-reducer';
-import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from './state/todolists-reducer';
+import {
+  changeTodolistFilterAC,
+  changeTodolistTitleAC,
+  removeTodolistAC,
+  TodolistDomainType
+} from './state/todolists-reducer';
 import {Task} from './components/Task';
 import {ButtonUC} from './ButtonUC';
+import {TaskStatuses, TaskType} from './api/todolist-api';
 
-export type TaskType = {
-  id: string
-  title: string
-  isDone: boolean
-}
+
 type PropsType = {
-  todolist: TodolistType
+  todolist: TodolistDomainType
 }
 export const TodolistWithDispatch = memo(({todolist}: PropsType) => {
-  const {todolistId, title, filter} = todolist
+  const {id, title, filter,order, addedDate} = todolist
 
-  let tasks = useSelector<AppRootReducerType, TaskType[]>(store => store.tasks[todolistId])
+  let tasks = useSelector<AppRootReducerType, TaskType[]>(store => store.tasks[id])
 
   const dispatch = useDispatch()
 
 
   if (filter === 'active') {
-    tasks = tasks.filter(t => t.isDone === true)
+    tasks = tasks.filter(t => t.status === TaskStatuses.Completed)
   }
   if (filter === 'completed') {
-    tasks = tasks.filter(t => t.isDone === false)
+    tasks = tasks.filter(t => t.status === TaskStatuses.New)
   }
 
   const removeTodolistHandler = () => {
-    dispatch(removeTodolistAC(todolistId))
+    dispatch(removeTodolistAC(id))
   }
   const changeTodolistTitleHandler = useCallback((title: string) => {
-    dispatch(changeTodolistTitleAC(todolistId, title))
+    dispatch(changeTodolistTitleAC(id, title))
   },[dispatch])
 
 
   const addTaskHandler = useCallback((newTitle: string) => {
-    dispatch(addTaskAC(todolistId, newTitle))
-  },[todolistId])
+    dispatch(addTaskAC(id, newTitle))
+  },[id])
 
 
-  const allChangeFilterTasks = () => dispatch(changeTodolistFilterAC(todolistId, 'all'))
-  const activeChangeFilterTasks = () => dispatch(changeTodolistFilterAC(todolistId, 'active'))
-  const completedChangeFilterTasks = () => dispatch(changeTodolistFilterAC(todolistId, 'completed'))
+  const allChangeFilterTasks = () => dispatch(changeTodolistFilterAC(id, 'all'))
+  const activeChangeFilterTasks = () => dispatch(changeTodolistFilterAC(id, 'active'))
+  const completedChangeFilterTasks = () => dispatch(changeTodolistFilterAC(id, 'completed'))
 
 
   return <div>
@@ -70,7 +72,7 @@ export const TodolistWithDispatch = memo(({todolist}: PropsType) => {
             <Task
               key={t.id}
               task={t}
-              todolistId={todolistId}
+              todolistId={id}
             />
           )
         })

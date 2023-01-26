@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {number} from 'prop-types';
+
 
 const settings = {
   withCredentials: true,
@@ -53,14 +53,14 @@ export const todolistAPI = {
 
 //type
 
-type TodolistType = {
+export type TodolistType = {
   addedDate: string
   id: string
   order: number
   title: string
 }
 
-export enum TaskStatus {
+export enum TaskStatuses {
   New = 0,
   InProgress = 1,
   Completed = 2,
@@ -75,16 +75,16 @@ export enum TaskPriorities {
   Later = 4
 }
 
-type TaskType = {
+export type TaskType = {
+  todoListId: string
+  id: string
+  status: TaskStatuses
   description: string
   title: string
   // completed: boolean
-  status: TaskStatus
   priority: TaskPriorities
   startDate: string
   deadline: string
-  id: string
-  todoListId: string
   order: number
   addedDate: string
 }
@@ -107,7 +107,6 @@ export type UpdateTaskModel={
   description: string
   // completed: boolean
   status: number
-
   priority: number
   startDate: string
   deadline: string

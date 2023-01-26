@@ -1,7 +1,5 @@
 import React, {useCallback} from 'react';
 import './App.css';
-import {TaskType} from './Todolist';
-import {v1} from 'uuid';
 import {InputForm} from './components/InputForm';
 import ButtonAppBar from './components/AppBar';
 import {Container, Grid, Paper} from '@mui/material';
@@ -9,11 +7,13 @@ import {
   addTodolistAC,
   changeTodolistFilterAC,
   changeTodolistTitleAC,
-  removeTodolistAC
+  removeTodolistAC,
+  TodolistDomainType
 } from './state/todolists-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootReducerType} from './state/store';
 import {TodolistWithDispatch} from './TodolistWithRedux';
+import {TaskType} from './api/todolist-api';
 
 export type TodolistType = {
   todolistId: string
@@ -30,7 +30,7 @@ function AppWithRedux() {
   // const todolistId1 = v1();
   // const todolistId2 = v1();
 
-  const todolists = useSelector<AppRootReducerType, TodolistType[]>((store) => store.todolists)
+  const todolists = useSelector<AppRootReducerType, TodolistDomainType[]>((store) => store.todolists)
 
   const dispatch=useDispatch()
 
@@ -59,7 +59,7 @@ function AppWithRedux() {
           {
             todolists.map(tl => {
 
-                return <Grid item key={tl.todolistId}>
+                return <Grid item key={tl.id}>
                   <Paper style={{padding: '10px'}}>
                     <TodolistWithDispatch
                     todolist={tl}

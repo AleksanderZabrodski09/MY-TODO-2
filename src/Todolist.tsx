@@ -1,17 +1,20 @@
 import React from 'react';
-import {ChangeFilterType} from './App';
+
 import {CheckBox} from './components/CheckBox';
 import {InputForm} from './components/InputForm';
 import {EditableSpan} from './components/EditableSpan';
 import {Button} from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import PlaylistRemoveRoundedIcon from '@mui/icons-material/PlaylistRemoveRounded';
+import {TaskStatuses, TaskType} from './api/todolist-api';
+import {ChangeFilterType} from './state/todolists-reducer';
 
-export type TaskType = {
-  id: string
-  title: string
-  isDone: boolean
-}
+
+// export type TaskType = {
+//   id: string
+//   title: string
+//   status: TaskStatuses
+// }
 type TodolistType = {
   todolistId: string
   title: string
@@ -19,7 +22,7 @@ type TodolistType = {
   addTask: (todolistId: string, title: string) => void
   removeTask: (todolistId: string, taskId: string) => void
   changeFilter: (todolistId: string, value: ChangeFilterType) => void
-  changeTaskStatus: (todolistId: string, taskId: string, value: boolean) => void
+  changeTaskStatus: (todolistId: string, id: string, status: TaskStatuses) => void
   filter: ChangeFilterType
   removeTodolist: (todolistId: string) => void
   changeTaskTitle:(todolistId: string, taskId: string, title: string)=>void
@@ -39,7 +42,7 @@ export const Todolist: React.FC<TodolistType> = (props) => {
   const removeTaskHandler = (tID: string) => {
     props.removeTask(props.todolistId, tID)
   }
-  const onChangeTaskStatusHandler = (tID: string, eValue: boolean) => {
+  const onChangeTaskStatusHandler = (tID: string, eValue: TaskStatuses) => {
     props.changeTaskStatus(props.todolistId, tID, eValue)
   }
  const changeTaskTitleHandler=(tID:string, title:string)=>{
@@ -65,8 +68,8 @@ export const Todolist: React.FC<TodolistType> = (props) => {
       {
         props.tasks.map(t => {
 
-          return <div key={t.id} className={t.isDone ? 'isCompleted' : ''}>
-            <CheckBox checked={t.isDone} callBack={(eValue) => onChangeTaskStatusHandler(t.id, eValue)}/>
+          return <div key={t.id} className={t.status === TaskStatuses.Completed ? 'isCompleted' : ''}>
+            <CheckBox checked={t.status === TaskStatuses.Completed} callBack={(eValue) => onChangeTaskStatusHandler(t.id, eValue ? TaskStatuses.Completed : TaskStatuses.New)}/>
             <EditableSpan value={t.title} callback={(newTitle)=>changeTaskTitleHandler(t.id,newTitle)}/>
             <Button
               onClick={() => removeTaskHandler(t.id)}
