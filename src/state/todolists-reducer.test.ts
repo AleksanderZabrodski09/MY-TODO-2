@@ -7,6 +7,7 @@ import {
   TodolistDomainType,
   todolistsReducer
 } from './todolists-reducer';
+import {TodolistType} from '../api/todolist-api';
 
 
 const todolistId1 = v1()
@@ -23,9 +24,14 @@ beforeEach(() => {
 
 test('correct todolist should be added', () => {
 
-  const newTodolistTitle = 'New Todolist'
-
-  const endState = todolistsReducer(startState, addTodolistAC(newTodolistTitle))
+  // const newTodolistTitle = 'New Todolist'
+  let todolists:TodolistType = {
+    id: 'qewqwet',
+    title: 'New Todolist',
+    order: 0,
+    addedDate: ''
+  }
+  const endState = todolistsReducer(startState, addTodolistAC(todolists))
 
   expect(endState.length).toBe(3)
   expect(endState[0].title).toBe('New Todolist')
