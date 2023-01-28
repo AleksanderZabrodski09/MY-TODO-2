@@ -1,12 +1,12 @@
 import {v1} from 'uuid';
 import {
-  addTodolistAC, ChangeFilterType,
-  changeTodolistFilterAC,
+  addTodolistAC,
   changeTodolistTitleAC,
-  removeTodolistAC, TodolistDomainType,
+  removeTodolistAC, setTodolistsAC,
+
+  TodolistDomainType,
   todolistsReducer
 } from './todolists-reducer';
-
 
 
 const todolistId1 = v1()
@@ -21,7 +21,7 @@ beforeEach(() => {
   }
 )
 
-test.skip('correct todolist should be added', () => {
+test('correct todolist should be added', () => {
 
   const newTodolistTitle = 'New Todolist'
 
@@ -32,7 +32,7 @@ test.skip('correct todolist should be added', () => {
 
 })
 
-test.skip('correct todolist should be removed', () => {
+test('correct todolist should be removed', () => {
 
   const endState = todolistsReducer(startState, removeTodolistAC(todolistId1))
 
@@ -40,7 +40,7 @@ test.skip('correct todolist should be removed', () => {
   expect(endState[0].title).toBe('What to buy')
 })
 
-test.skip('correct todolist should change its name', ()=>{
+test('correct todolist should change its name', ()=>{
   const newTodolistTitle = 'New Todolist';
 
   const endState = todolistsReducer(startState, changeTodolistTitleAC(todolistId2, newTodolistTitle))
@@ -48,11 +48,10 @@ test.skip('correct todolist should change its name', ()=>{
   expect(endState[0].title).toBe('What to learn')
   expect(endState[1].title).toBe('New Todolist')
 })
-test.skip('correct todolist should change its name', ()=>{
-  const newFilter: ChangeFilterType = 'completed';
+test('todolist should be set to state', ()=>{
 
-  const endState = todolistsReducer(startState, changeTodolistFilterAC(todolistId2, newFilter))
+  const endState = todolistsReducer([], setTodolistsAC(startState))
 
-  expect(endState[0].filter).toBe('all')
-  expect(endState[1].filter).toBe('completed')
+  expect(endState.length).toBe(2)
+
 })
