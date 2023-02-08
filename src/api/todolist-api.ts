@@ -1,10 +1,11 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 
 const settings = {
   withCredentials: true,
   headers: {
     'API-KEY': '5983a517-e387-4f12-ac5e-a15dd0cef3b7',
+    //5983a517-e387-4f12-ac5e-a15dd0cef3b7
   }
 }
 
@@ -40,8 +41,8 @@ export const todolistAPI = {
     return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
       .then((res) => res.data)
   },
-  createTask(todolistId: string, taskTitle: string) {
-    return instance.post<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks`, {title:taskTitle})
+  createTask(todolistId: string, title: string) {
+    return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks`, {title})
       .then((res) => res.data)
   },
   updateTask(todolistId: string, taskId: string, model: UpdateTaskModel) {
@@ -49,6 +50,8 @@ export const todolistAPI = {
       .then((res) => res.data)
   }
 }
+
+
 
 
 //type
@@ -59,14 +62,12 @@ export type TodolistType = {
   order: number
   title: string
 }
-
 export enum TaskStatuses {
   New = 0,
   InProgress = 1,
   Completed = 2,
   Draft = 3
 }
-
 export enum TaskPriorities {
   Low = 0,
   Middle = 1,
@@ -74,7 +75,6 @@ export enum TaskPriorities {
   Urgently = 3,
   Later = 4
 }
-
 export type TaskType = {
   todoListId: string
   id: string
@@ -88,20 +88,17 @@ export type TaskType = {
   order: number
   addedDate: string
 }
-
 type ResponseType<D = {}> = {
   data: D
   fieldsErrors: string[]
   messages: string[]
   resultCode: number
 }
-
 type GetTasksResponse = {
   error: string | null
   totalCount: number
   items: TaskType[]
 }
-
 export type UpdateTaskModel={
   title: string
   description: string
