@@ -25,13 +25,13 @@ beforeEach(() => {
 test('correct todolist should be added', () => {
 
   // const newTodolistTitle = 'New Todolist'
-  let todolists:TodolistType = {
+  let todolist:TodolistType = {
     id: 'qewqwet',
     title: 'New Todolist',
     order: 0,
     addedDate: ''
   }
-  const endState = todolistsReducer(startState, addTodolistAC(todolists))
+  const endState = todolistsReducer(startState, addTodolistAC(todolist))
 
   expect(endState.length).toBe(3)
   expect(endState[0].title).toBe('New Todolist')
