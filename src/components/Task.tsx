@@ -3,18 +3,9 @@ import {EditableSpan} from './EditableSpan';
 import {Button} from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import React, {memo} from 'react';
-
-import {useDispatch} from 'react-redux';
-import {
-  changeTasksStatusAC,
-  changeTasksTitleAC,
-  removeTaskAC,
-  removeTaskTC,
-  updateTaskTC
-} from '../state/tasks-reducer';
+import {removeTaskTC, updateTaskTC} from '../state/tasks-reducer';
 import {TaskStatuses, TaskType} from '../api/todolist-api';
 import {AppDispatch} from '../state/store';
-
 
 
 export const Task = memo(({task, todolistId}: { task: TaskType, todolistId:string }) => {
@@ -27,12 +18,12 @@ export const Task = memo(({task, todolistId}: { task: TaskType, todolistId:strin
   }
   const changeTasksStatus=(eValue:boolean) => {
     // dispatch(changeTasksStatusAC(todolistId, id, eValue ? TaskStatuses.Completed : TaskStatuses.New))
-    dispatch(updateTaskTC(todolistId, id, eValue ? TaskStatuses.Completed : TaskStatuses.New))
+    dispatch(updateTaskTC(todolistId, id, {status:eValue ? TaskStatuses.Completed : TaskStatuses.New}))
   }
 
   return <div  className={status ? 'isCompleted' : ''}>
     <CheckBox checked={status === TaskStatuses.Completed} callBack={changeTasksStatus}/>
-    <EditableSpan value={title} callback={(newTitle) => dispatch(changeTasksTitleAC(todolistId,id, newTitle))}/>
+    <EditableSpan value={title} callback={(newTitle) => dispatch(updateTaskTC(todolistId,id, {title:newTitle}))}/>
     <Button
       onClick={removeTaskHandler}
       color='secondary'

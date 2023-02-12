@@ -2,11 +2,11 @@ import {TasksStateType} from '../App';
 
 import {
   addTaskAC,
-  changeTasksStatusAC,
-  changeTasksTitleAC,
+  // changeTasksStatusAC,
+  // changeTasksTitleAC,
   removeTaskAC,
   setTasksAC,
-  tasksReducer
+  tasksReducer, updateTasksAC
 } from './tasks-reducer';
 import {addTodolistAC, removeTodolistAC, setTodolistsAC} from './todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolist-api';
@@ -78,7 +78,7 @@ test('correct task should change its name', ()=>{
   const newTaskTitle = 'cookies';
 
 
-  const endState = tasksReducer(startState, changeTasksTitleAC('todolistId2', '2', newTaskTitle))
+  const endState = tasksReducer(startState, updateTasksAC('todolistId2', '2', {title:newTaskTitle}))
 
   expect(endState['todolistId2'][0].title).toBe('bread')
   expect(endState['todolistId2'][1].title).toBe('cookies')
@@ -88,7 +88,7 @@ test('correct task should change its name', ()=>{
 
 test('status of specified task should be changed', ()=>{
 
-  const endState= tasksReducer(startState, changeTasksStatusAC('todolistId1', '2', TaskStatuses.New))
+  const endState= tasksReducer(startState, updateTasksAC('todolistId1', '2', {status:TaskStatuses.New}))
 
   expect(endState['todolistId1'][1].status).toBe(TaskStatuses.New)
   expect(endState['todolistId2'][1].status).toBe(TaskStatuses.Completed)
