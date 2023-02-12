@@ -7,7 +7,7 @@ import {AppDispatch, useAppSelector} from './state/store';
 import {addTaskAC, addTaskTC, fetchTasksTC} from './state/tasks-reducer';
 import {
   changeTodolistFilterAC,
-  changeTodolistTitleAC,
+  changeTodolistTitleAC, changeTodolistTitleTC,
   removeTodolistTC,
   TodolistDomainType
 } from './state/todolists-reducer';
@@ -49,7 +49,7 @@ export const TodolistWithDispatch = memo(({todolist}: PropsType) => {
   }, [id])
 
   const changeTodolistTitleHandler = useCallback((title: string) => {
-    dispatch(changeTodolistTitleAC(id, title))
+    dispatch(changeTodolistTitleTC(id, title))
   }, [dispatch])
 
 

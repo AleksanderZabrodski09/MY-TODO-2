@@ -6,9 +6,9 @@ import {Container, Grid, Paper} from '@mui/material';
 import {
   addTodolistAC, addTodolistTC,
   changeTodolistFilterAC,
-  changeTodolistTitleAC,
+  changeTodolistTitleAC, changeTodolistTitleTC,
   fetchTodolistTC,
-  removeTodolistAC,
+  removeTodolistAC, removeTodolistTC,
   TodolistDomainType
 } from './state/todolists-reducer';
 import {useSelector} from 'react-redux';
@@ -41,7 +41,7 @@ function AppWithRedux() {
   
   
   const removeTodolist = useCallback((todolistId: string) => {
-    dispatch(removeTodolistAC(todolistId))
+    dispatch(removeTodolistTC(todolistId))
   },[dispatch])
   const addTodolist = useCallback((title: string) => {
     dispatch(addTodolistTC(title))
@@ -50,7 +50,7 @@ function AppWithRedux() {
     dispatch(changeTodolistFilterAC(todolistId, value))
   },[dispatch])
   const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
-    dispatch(changeTodolistTitleAC(todolistId, title))
+    dispatch(changeTodolistTitleTC(todolistId, title))
   },[dispatch])
 
   return (
