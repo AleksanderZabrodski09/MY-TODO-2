@@ -4,17 +4,16 @@ import {EditableSpan} from './components/EditableSpan';
 import {Button} from '@mui/material';
 import PlaylistRemoveRoundedIcon from '@mui/icons-material/PlaylistRemoveRounded';
 import {AppDispatch, useAppSelector} from './state/store';
-import {addTaskAC, addTaskTC, fetchTasksTC} from './state/tasks-reducer';
+import {addTaskTC, fetchTasksTC} from './state/tasks-reducer';
 import {
   changeTodolistFilterAC,
-  changeTodolistTitleAC, changeTodolistTitleTC,
+  changeTodolistTitleTC,
   removeTodolistTC,
   TodolistDomainType
 } from './state/todolists-reducer';
 import {Task} from './components/Task';
 import {ButtonUC} from './ButtonUC';
 import {TaskStatuses, TaskType} from './api/todolist-api';
-import {TasksStateType} from './AppWithRedux';
 
 
 type PropsType = {

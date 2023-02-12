@@ -7,8 +7,6 @@ import {AppRootReducerType} from './store';
 export type TasksReducerType =
   | ReturnType<typeof addTaskAC>
   | ReturnType<typeof removeTaskAC>
-  // | ReturnType<typeof changeTasksTitleAC>
-  // | ReturnType<typeof changeTasksStatusAC>
   | AddTodolistACType
   | RemoveTodolistACType
   | SetTodolistActionType
