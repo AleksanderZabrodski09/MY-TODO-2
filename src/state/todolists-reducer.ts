@@ -7,7 +7,7 @@ import {Dispatch} from 'redux';
 //   todolists: TodolistType[]
 // }
 
-//Reducer
+//  Reducer
 const initialState: TodolistDomainType[] = []
 export const todolistsReducer = (state = initialState, action: TodolistsReducerType): TodolistDomainType[] => {
   switch (action.type) {
