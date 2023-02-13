@@ -1,11 +1,11 @@
-import {CheckBox} from './CheckBox';
-import {EditableSpan} from './EditableSpan';
+import {CheckBox} from '../CheckBox';
+import {EditableSpan} from '../EditableSpan/EditableSpan';
 import {Button} from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import React, {memo} from 'react';
-import {removeTaskTC, updateTaskTC} from '../state/tasks-reducer';
-import {TaskStatuses, TaskType} from '../api/todolist-api';
-import {AppDispatch} from '../state/store';
+import {removeTaskTC, updateTaskTC} from '../../features/tasks-reducer';
+import {TaskStatuses, TaskType} from '../../api/todolist-api';
+import {AppDispatch} from '../../app/store';
 
 
 export const Task = memo(({task, todolistId}: { task: TaskType, todolistId:string }) => {

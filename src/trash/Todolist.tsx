@@ -1,13 +1,13 @@
 import React from 'react';
 
-import {CheckBox} from './components/CheckBox';
-import {InputForm} from './components/InputForm';
-import {EditableSpan} from './components/EditableSpan';
+import {CheckBox} from '../components/CheckBox';
+import {InputForm} from '../components/InputForm/InputForm';
+import {EditableSpan} from '../components/EditableSpan/EditableSpan';
 import {Button} from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import PlaylistRemoveRoundedIcon from '@mui/icons-material/PlaylistRemoveRounded';
-import {TaskStatuses, TaskType} from './api/todolist-api';
-import {ChangeFilterType} from './state/todolists-reducer';
+import {TaskStatuses, TaskType} from '../api/todolist-api';
+import {ChangeFilterType} from '../features/todolists-reducer';
 
 
 // export type TaskType = {

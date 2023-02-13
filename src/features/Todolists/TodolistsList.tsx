@@ -1,19 +1,19 @@
 import React, {useCallback, useEffect} from 'react';
-import {AppDispatch, useAppSelector} from '../../state/store';
+import {AppDispatch, useAppSelector} from '../../app/store';
 import {
-  addTodolistTC,
+  addTodolistTC, ChangeFilterType,
   changeTodolistFilterAC,
   changeTodolistTitleTC,
   fetchTodolistTC,
   removeTodolistTC,
   TodolistDomainType
-} from '../../state/todolists-reducer';
+} from '../todolists-reducer';
 import {Grid, Paper} from '@mui/material';
 import {InputForm} from '../../components/InputForm/InputForm';
 import {TodolistWithDispatch} from './TodolistWithRedux';
-import {ChangeFilterType} from '../../app/AppWithRedux';
 
-export const TodolistsList: React.FC = (props) => {
+
+export const TodolistsList: React.FC = () => {
 
   // const todolists = useSelector<AppRootReducerType, TodolistDomainType[]>((store) => store.todolists)
   const todolists = useAppSelector<TodolistDomainType[]>((store) => store.todolists)
