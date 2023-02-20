@@ -20,10 +20,7 @@ export const TodolistsList: React.FC = () => {
   const dispatch = AppDispatch()
 
   useEffect(() => {
-    // // todolistAPI.getTodolist()
-    // //   .then(res=> dispatch(setTodolistsAC(res)))
-    // // fetchTodolistThunk(dispatch);
-    // dispatch(fetchTodolistThunk);
+
     dispatch(fetchTodolistTC());
   }, [])
 

@@ -1,4 +1,4 @@
-import {AppBar, Button, IconButton, Toolbar, Typography} from '@mui/material';
+import {AppBar, Button, IconButton, LinearProgress, Toolbar, Typography} from '@mui/material';
 import {Menu} from '@mui/icons-material';
 
 
@@ -20,6 +20,7 @@ export default function ButtonAppBar() {
         </Typography>
         <Button color="inherit">Login</Button>
       </Toolbar>
+      <LinearProgress color="secondary" />
     </AppBar>
   );
 }

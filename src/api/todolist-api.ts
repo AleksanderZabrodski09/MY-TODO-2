@@ -33,6 +33,7 @@ export const todolistAPI = {
     return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
       .then((res) => res.data)
   },
+
   getTask(todolistId: string) {
     return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
       .then((res) => res.data)
@@ -78,9 +79,9 @@ export enum TaskPriorities {
 export type TaskType = {
   todoListId: string
   id: string
+  title: string
   status: TaskStatuses
   description: string
-  title: string
   // completed: boolean
   priority: TaskPriorities
   startDate: string
@@ -102,8 +103,8 @@ type GetTasksResponse = {
 export type UpdateTaskModelType={
   title: string
   description: string
-  status: number
-  priority: number
+  status: TaskStatuses
+  priority: TaskPriorities
   startDate: string
   deadline: string
 }

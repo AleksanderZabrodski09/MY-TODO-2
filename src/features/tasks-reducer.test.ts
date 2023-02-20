@@ -2,8 +2,6 @@ import {TasksStateType} from '../trash/App';
 
 import {
   addTaskAC,
-  // changeTasksStatusAC,
-  // changeTasksTitleAC,
   removeTaskAC,
   setTasksAC,
   tasksReducer, updateTasksAC
