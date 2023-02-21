@@ -78,18 +78,22 @@ export const fetchTasksTC = (todolistId: string) => {
 }
 
 export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch) => {
+  dispatch(setLoadingStatusAC('loading'))
   todolistAPI.deleteTask(todolistId, taskId)
     .then((res) => {
       dispatch(removeTaskAC(todolistId, taskId))
+      dispatch(setLoadingStatusAC('succeeded'))
     })
 }
 
 export const addTaskTC = (todolistId: string, title: string) => {
   return (dispatch: Dispatch) => {
+    dispatch(setLoadingStatusAC('loading'))
     todolistAPI.createTask(todolistId, title)
       .then((res) => {
         const item = res.data.item
         dispatch(addTaskAC(item))
+        dispatch(setLoadingStatusAC('succeeded'))
       })
   }
 }
@@ -118,9 +122,11 @@ export const updateTaskTC = (todolistId: string, taskId: string, propertyModel: 
         ...task,
         ...propertyModel
       }
+      dispatch(setLoadingStatusAC('loading'))
       todolistAPI.updateTask(todolistId, taskId, model)
         .then((res) => {
           dispatch(updateTasksAC(todolistId, taskId, propertyModel))
+          dispatch(setLoadingStatusAC('succeeded'))
         })
     }
   }
