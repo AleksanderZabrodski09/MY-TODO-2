@@ -1,8 +1,10 @@
 import {AppBar, Button, IconButton, LinearProgress, Toolbar, Typography} from '@mui/material';
 import {Menu} from '@mui/icons-material';
+import {useAppSelector} from './store';
 
 
 export default function ButtonAppBar() {
+  const status=useAppSelector(store=>store.app.status)
   return (
     <AppBar position="static">
       <Toolbar>
@@ -20,7 +22,7 @@ export default function ButtonAppBar() {
         </Typography>
         <Button color="inherit">Login</Button>
       </Toolbar>
-      <LinearProgress color="secondary" />
+      {status==='loading' && <LinearProgress color="secondary"/>}
     </AppBar>
   );
 }

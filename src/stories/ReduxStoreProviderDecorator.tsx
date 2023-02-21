@@ -25,6 +25,9 @@ const initialGlobalState = {
       {id: v1(), title: 'Milk', status: TaskStatuses.New,  order: 0, addedDate: '', todoListId: 'todolistId2', priority: TaskPriorities.Hi, startDate: '', deadline: '', description: ''},
       {id: v1(), title: 'React Book', status: TaskStatuses.Completed,  order: 0, addedDate: '', todoListId: 'todolistId2', priority: TaskPriorities.Hi, startDate: '', deadline: '', description: ''}
     ]
+  },
+  app:{
+    status:'loading',
   }
 }
 
