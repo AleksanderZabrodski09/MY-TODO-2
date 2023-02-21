@@ -1,8 +1,8 @@
 import * as React from 'react';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import MuiAlert, {AlertProps} from '@mui/material/Alert';
+import {AppDispatch, useAppSelector} from '../../app/store';
+import {setAppErrorAC} from '../../app/app-reducer';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -12,25 +12,26 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 export function ErrorSnackbar() {
-  const [open, setOpen] = React.useState(true);
+  // const [open, setOpen] = React.useState(true);
 
-  const handleClick = () => {
-    setOpen(true);
-  };
+  const error = useAppSelector(store => store.app.error)
+  const dispatch = AppDispatch()
+
 
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
-
-    setOpen(false);
+    dispatch(setAppErrorAC(null))
+    // setOpen(false);
   };
 
   return (
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          This is an error message😠!
-        </Alert>
-      </Snackbar>
+    <Snackbar open={!!error} autoHideDuration={6000} onClose={handleClose}>
+      <Alert onClose={handleClose} severity="error" sx={{width: '100%'}}>
+        {error}
+        {/*This is an error message😠!*/}
+      </Alert>
+    </Snackbar>
   );
 }

@@ -28,6 +28,7 @@ const initialGlobalState = {
   },
   app:{
     status:'loading',
+    error:null,
   }
 }
 
