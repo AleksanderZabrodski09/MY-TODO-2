@@ -3,6 +3,7 @@ import {AddTodolistACType, RemoveTodolistACType, SetTodolistActionType} from './
 import {TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType} from '../api/todolist-api';
 import {Dispatch} from 'redux';
 import {AppRootReducerType} from '../app/store';
+import {setLoadingStatusAC} from '../app/app-reducer';
 
 
 //  Reducer
@@ -67,9 +68,11 @@ export const setTasksAC = (todolistId: string, tasks: TaskType[]) => {
 //  thunks
 export const fetchTasksTC = (todolistId: string) => {
   return (dispatch: Dispatch) => {
+    dispatch(setLoadingStatusAC('loading'))
     todolistAPI.getTask(todolistId)
       .then((res) => {
         dispatch(setTasksAC(todolistId, res.items))
+        dispatch(setLoadingStatusAC('succeeded'))
       })
   }
 }
