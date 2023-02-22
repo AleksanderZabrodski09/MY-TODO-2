@@ -63,6 +63,13 @@ export type TodolistType = {
   order: number
   title: string
 }
+
+export enum ResultCode{
+  SUCCEEDED,
+  FAILED,
+  CAPTCHA = 10
+}
+
 export enum TaskStatuses {
   New = 0,
   InProgress = 1,

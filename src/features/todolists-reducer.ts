@@ -1,6 +1,6 @@
-import {todolistAPI, TodolistType} from '../api/todolist-api';
+import {ResultCode, todolistAPI, TodolistType} from '../api/todolist-api';
 import {Dispatch} from 'redux';
-import {setLoadingStatusAC} from '../app/app-reducer';
+import {AppActionsType, setAppErrorAC, setLoadingStatusAC} from '../app/app-reducer';
 
 
 // export type SetTodolistActionType = {
@@ -61,10 +61,12 @@ export const setTodolistsAC = (todolists: TodolistType[]) => {
 
 export const fetchTodolistTC = () => {
   return (dispatch: Dispatch) => {
+    dispatch(setLoadingStatusAC('loading'))
     todolistAPI.getTodolist()
       .then((res) => {
         // dispatch(setTodolistsAC(res.data))
         dispatch(setTodolistsAC(res))
+        dispatch(setLoadingStatusAC('succeeded'))
       })
   }
 }
@@ -78,16 +80,30 @@ export const removeTodolistTC = (todolistId: string) => (dispatch: Dispatch) => 
     })
 }
 export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
+  dispatch(setLoadingStatusAC('loading'))
   todolistAPI.createTodolist(title)
     .then((res) => {
-      dispatch(addTodolistAC(res.data.item))
+      if(res.resultCode===ResultCode.SUCCEEDED){
+        dispatch(addTodolistAC(res.data.item))
+        dispatch(setLoadingStatusAC('succeeded'))
+      }else {
+        if(res.messages.length){
+          dispatch(setAppErrorAC(res.messages[0]))
+        } else {
+          dispatch(setAppErrorAC('Some error occurred'))
+        }
+        dispatch(setLoadingStatusAC('failed'))
+      }
+
     })
 }
 export const changeTodolistTitleTC = (todolistId: string, title: string) => {
   return (dispatch: Dispatch) => {
+    dispatch(setLoadingStatusAC('loading'))
     todolistAPI.updateTodolist(todolistId, title)
       .then((res) => {
         dispatch(changeTodolistTitleAC(todolistId, title))
+        dispatch(setLoadingStatusAC('succeeded'))
       })
   }
 }
@@ -100,6 +116,7 @@ export type TodolistsReducerType =
   | ReturnType<typeof changeTodolistTitleAC>
   | ReturnType<typeof changeTodolistFilterAC>
   | SetTodolistActionType
+  | AppActionsType
 
 
 export type AddTodolistACType = ReturnType<typeof addTodolistAC>

@@ -1,9 +1,16 @@
 
 import {AddTodolistACType, RemoveTodolistACType, SetTodolistActionType} from './todolists-reducer';
-import {TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType} from '../api/todolist-api';
+import {
+  ResultCode,
+  TaskPriorities,
+  TaskStatuses,
+  TaskType,
+  todolistAPI,
+  UpdateTaskModelType
+} from '../api/todolist-api';
 import {Dispatch} from 'redux';
 import {AppRootReducerType} from '../app/store';
-import {setLoadingStatusAC} from '../app/app-reducer';
+import {AppActionsType, setAppErrorAC, setLoadingStatusAC} from '../app/app-reducer';
 
 
 //  Reducer
@@ -72,7 +79,10 @@ export const fetchTasksTC = (todolistId: string) => {
     todolistAPI.getTask(todolistId)
       .then((res) => {
         dispatch(setTasksAC(todolistId, res.items))
-        dispatch(setLoadingStatusAC('succeeded'))
+        // dispatch(setLoadingStatusAC('succeeded'))
+      })
+      .finally(()=>{
+        dispatch(setLoadingStatusAC('idle'))
       })
   }
 }
@@ -91,9 +101,18 @@ export const addTaskTC = (todolistId: string, title: string) => {
     dispatch(setLoadingStatusAC('loading'))
     todolistAPI.createTask(todolistId, title)
       .then((res) => {
-        const item = res.data.item
-        dispatch(addTaskAC(item))
-        dispatch(setLoadingStatusAC('succeeded'))
+        if(res.resultCode===ResultCode.SUCCEEDED){
+          const item = res.data.item
+          dispatch(addTaskAC(item))
+          dispatch(setLoadingStatusAC('succeeded'))
+        }else{
+          if(res.messages.length){
+            dispatch(setAppErrorAC(res.messages[0]))
+          }else{
+            dispatch(setAppErrorAC('Some error occurred'))
+          }
+          dispatch(setLoadingStatusAC('failed'))
+        }
       })
   }
 }
@@ -145,6 +164,7 @@ export type TasksReducerType =
   | AddTodolistACType
   | RemoveTodolistACType
   | SetTodolistActionType
-  | SetTasksACType
   | ReturnType<typeof updateTasksAC>
+  | SetTasksACType
+  | AppActionsType
 export type SetTasksACType = ReturnType<typeof setTasksAC>
