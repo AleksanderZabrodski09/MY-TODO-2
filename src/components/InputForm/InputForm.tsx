@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import {Button, TextField} from '@mui/material';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
-export const InputForm = memo(({addInput}: { addInput: (title: string) => void }) => {
+export const InputForm = memo(({addInput,disabled}: { addInput: (title: string) => void, disabled?: boolean }) => {
 
 
   const [title, setTitle] = useState('')
@@ -36,10 +36,12 @@ export const InputForm = memo(({addInput}: { addInput: (title: string) => void }
       helperText={error}
       label="title"
       color='secondary'
+      disabled={disabled}
     />
     <Button
       onClick={addInputForm}
       color='secondary'
+      disabled={disabled}
     ><AddToPhotosIcon/>
     </Button>
     {/*{error && <div className={'errorMessage'}>{error}</div>}*/}

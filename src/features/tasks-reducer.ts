@@ -1,5 +1,10 @@
 
-import {AddTodolistACType, RemoveTodolistACType, SetTodolistActionType} from './todolists-reducer';
+import {
+  AddTodolistACType,
+  changeEntityStatusAC,
+  RemoveTodolistACType,
+  SetTodolistActionType
+} from './todolists-reducer';
 import {
   ResultCode,
   TaskPriorities,
@@ -99,12 +104,15 @@ export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: D
 export const addTaskTC = (todolistId: string, title: string) => {
   return (dispatch: Dispatch) => {
     dispatch(setLoadingStatusAC('loading'))
+    dispatch(changeEntityStatusAC(todolistId, 'loading'))
     todolistAPI.createTask(todolistId, title)
       .then((res) => {
         if(res.resultCode===ResultCode.SUCCEEDED){
           const item = res.data.item
           dispatch(addTaskAC(item))
           dispatch(setLoadingStatusAC('succeeded'))
+          dispatch(changeEntityStatusAC(todolistId, 'succeeded'))
+
         }else{
           if(res.messages.length){
             dispatch(setAppErrorAC(res.messages[0]))

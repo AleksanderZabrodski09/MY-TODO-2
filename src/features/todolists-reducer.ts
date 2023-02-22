@@ -81,6 +81,7 @@ export const removeTodolistTC = (todolistId: string) => (dispatch: Dispatch) => 
     .then((res) => {
       dispatch(removeTodolistAC(todolistId))
       dispatch(setLoadingStatusAC('succeeded'))
+      dispatch(changeEntityStatusAC(todolistId, 'succeeded'))
     })
     .catch((e)=>{
       dispatch(setAppErrorAC(e.message))

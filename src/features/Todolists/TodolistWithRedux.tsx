@@ -70,7 +70,7 @@ export const TodolistWithDispatch = memo(({todolist}: PropsType) => {
       ><PlaylistRemoveRoundedIcon/></Button>
     </h3>
 
-    <InputForm addInput={addTaskHandler}/>
+    <InputForm addInput={addTaskHandler}   disabled={entityStatus==='loading'}/>
     <div>
       {
         tasks.map(t => {
