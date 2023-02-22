@@ -15,6 +15,7 @@ import {
 import {Dispatch} from 'redux';
 import {AppRootReducerType} from '../app/store';
 import {AppActionsType, setAppErrorAC, setLoadingStatusAC} from '../app/app-reducer';
+import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
 
 
 //  Reducer
@@ -98,10 +99,14 @@ export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: D
   dispatch(setLoadingStatusAC('loading'))
   todolistAPI.deleteTask(todolistId, taskId)
     .then((res) => {
-      dispatch(removeTaskAC(todolistId, taskId))
-      dispatch(setLoadingStatusAC('succeeded'))
+      if(res.resultCode===ResultCode.SUCCEEDED){
+        dispatch(removeTaskAC(todolistId, taskId))
+        dispatch(setLoadingStatusAC('succeeded'))
+      }
     })
-}
+    .catch((e)=>{
+      handleServerNetworkError(e,dispatch)
+})}
 
 export const addTaskTC = (todolistId: string, title: string) => {
   return (dispatch: Dispatch) => {
@@ -116,17 +121,19 @@ export const addTaskTC = (todolistId: string, title: string) => {
           dispatch(changeEntityStatusAC(todolistId, 'succeeded'))
 
         } else {
-          if (res.messages.length) {
-            dispatch(setAppErrorAC(res.messages[0]))
-          } else {
-            dispatch(setAppErrorAC('Some error occurred'))
-          }
-          dispatch(setLoadingStatusAC('failed'))
+          handleServerAppError(res,dispatch)
+          // if (res.messages.length) {
+          //   dispatch(setAppErrorAC(res.messages[0]))
+          // } else {
+          //   dispatch(setAppErrorAC('Some error occurred'))
+          // }
+          // dispatch(setLoadingStatusAC('failed'))
         }
       })
       .catch((error) => {
-        dispatch(setLoadingStatusAC('failed'))
-        dispatch(setAppErrorAC(error.message))
+        handleServerNetworkError(error,dispatch)
+        // dispatch(setLoadingStatusAC('failed'))
+        // dispatch(setAppErrorAC(error.message))
       })
   }
 }
@@ -162,16 +169,19 @@ export const updateTaskTC = (todolistId: string, taskId: string, propertyModel: 
             dispatch(updateTasksAC(todolistId, taskId, propertyModel))
             dispatch(setLoadingStatusAC('succeeded'))
           } else {
-            if (res.messages[0]) {
-              dispatch(setAppErrorAC(res.messages[0]))
-            } else {
-              dispatch(setAppErrorAC('Some error occurred'))
-            }
+            handleServerAppError(res,dispatch)
+            // if (res.messages[0]) {
+            //   dispatch(setAppErrorAC(res.messages[0]))
+            // } else {
+            //   dispatch(setAppErrorAC('Some error occurred'))
+            // }
+            // dispatch(setLoadingStatusAC('failed'))
           }
         })
         .catch((error) => {
-          dispatch(setAppErrorAC(error.message))
-          dispatch(setLoadingStatusAC('failed'))
+          handleServerNetworkError(error,dispatch)
+          // dispatch(setAppErrorAC(error.message))
+          // dispatch(setLoadingStatusAC('failed'))
         })
     }
   }
