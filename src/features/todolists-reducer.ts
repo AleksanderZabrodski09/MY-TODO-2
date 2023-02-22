@@ -104,7 +104,6 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
         }
         dispatch(setLoadingStatusAC('failed'))
       }
-
     })
 }
 export const changeTodolistTitleTC = (todolistId: string, title: string) => {

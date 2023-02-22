@@ -1,4 +1,3 @@
-
 import {
   AddTodolistACType,
   changeEntityStatusAC,
@@ -62,8 +61,11 @@ export const tasksReducer = (state = initialState, action: TasksReducerType): Ta
 
 //  actions
 
-export const removeTaskAC = (todolistId: string, taskId: string,) => ({type: 'REMOVE-TASK', payload: {todolistId, taskId}}as const)
-export const addTaskAC = (task: TaskType) => ({type: 'ADD-TASK', payload: {task}}as const)
+export const removeTaskAC = (todolistId: string, taskId: string,) => ({
+  type: 'REMOVE-TASK',
+  payload: {todolistId, taskId}
+} as const)
+export const addTaskAC = (task: TaskType) => ({type: 'ADD-TASK', payload: {task}} as const)
 export const updateTasksAC = (todolistId: string, taskId: string, model: UpdatePropertyModelType) => {
   return {
     type: 'UPDATE-TASK',
@@ -86,7 +88,7 @@ export const fetchTasksTC = (todolistId: string) => {
         dispatch(setTasksAC(todolistId, res.items))
         // dispatch(setLoadingStatusAC('succeeded'))
       })
-      .finally(()=>{
+      .finally(() => {
         dispatch(setLoadingStatusAC('idle'))
       })
   }
@@ -107,20 +109,24 @@ export const addTaskTC = (todolistId: string, title: string) => {
     dispatch(changeEntityStatusAC(todolistId, 'loading'))
     todolistAPI.createTask(todolistId, title)
       .then((res) => {
-        if(res.resultCode===ResultCode.SUCCEEDED){
+        if (res.resultCode === ResultCode.SUCCEEDED) {
           const item = res.data.item
           dispatch(addTaskAC(item))
           dispatch(setLoadingStatusAC('succeeded'))
           dispatch(changeEntityStatusAC(todolistId, 'succeeded'))
 
-        }else{
-          if(res.messages.length){
+        } else {
+          if (res.messages.length) {
             dispatch(setAppErrorAC(res.messages[0]))
-          }else{
+          } else {
             dispatch(setAppErrorAC('Some error occurred'))
           }
           dispatch(setLoadingStatusAC('failed'))
         }
+      })
+      .catch((error) => {
+        dispatch(setLoadingStatusAC('failed'))
+        dispatch(setAppErrorAC(error.message))
       })
   }
 }
@@ -152,8 +158,20 @@ export const updateTaskTC = (todolistId: string, taskId: string, propertyModel: 
       dispatch(setLoadingStatusAC('loading'))
       todolistAPI.updateTask(todolistId, taskId, model)
         .then((res) => {
-          dispatch(updateTasksAC(todolistId, taskId, propertyModel))
-          dispatch(setLoadingStatusAC('succeeded'))
+          if (res.resultCode === ResultCode.SUCCEEDED) {
+            dispatch(updateTasksAC(todolistId, taskId, propertyModel))
+            dispatch(setLoadingStatusAC('succeeded'))
+          } else {
+            if (res.messages[0]) {
+              dispatch(setAppErrorAC(res.messages[0]))
+            } else {
+              dispatch(setAppErrorAC('Some error occurred'))
+            }
+          }
+        })
+        .catch((error) => {
+          dispatch(setAppErrorAC(error.message))
+          dispatch(setLoadingStatusAC('failed'))
         })
     }
   }
