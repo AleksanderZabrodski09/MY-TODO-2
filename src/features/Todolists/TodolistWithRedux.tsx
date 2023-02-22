@@ -20,7 +20,7 @@ type PropsType = {
   todolist: TodolistDomainType
 }
 export const TodolistWithDispatch = memo(({todolist}: PropsType) => {
-  const {id, title, filter, order, addedDate} = todolist
+  const {id, title, filter, order, addedDate,entityStatus} = todolist
 
   // let tasks = useSelector<AppRootReducerType, TaskType[]>(store => store.tasks[id])
   let tasks = useAppSelector<TaskType[]>(store => store.tasks[id])
@@ -66,6 +66,7 @@ export const TodolistWithDispatch = memo(({todolist}: PropsType) => {
       <Button
         onClick={removeTodolistHandler}
         color='secondary'
+        disabled={entityStatus==='loading'}
       ><PlaylistRemoveRoundedIcon/></Button>
     </h3>
 
