@@ -5,7 +5,7 @@ import {Container} from '@mui/material';
 import {TodolistsList} from '../features/Todolists/TodolistsList';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
 import {Navigate, Route, Routes} from 'react-router-dom';
-import {Login} from '../features/Login';
+import {Login} from '../features/Login/Login';
 
 
 function AppWithRedux() {

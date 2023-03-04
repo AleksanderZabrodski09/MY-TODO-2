@@ -29,6 +29,9 @@ const initialGlobalState = {
   app:{
     status:'loading',
     error:null,
+  },
+  login:{
+    isLoggedIn: false
   }
 }
 

@@ -4,10 +4,12 @@ import {tasksReducer} from '../features/tasks-reducer';
 import thunk, {ThunkDispatch} from 'redux-thunk';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {appReducer} from './app-reducer';
+import {authReducer} from '../features/Login/auth-reducer';
 
 
 
 const rootReducer = combineReducers({
+  login:authReducer,
   tasks: tasksReducer,
   todolists: todolistsReducer,
   app: appReducer
