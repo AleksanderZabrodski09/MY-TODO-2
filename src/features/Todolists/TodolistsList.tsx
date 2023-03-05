@@ -11,16 +11,19 @@ import {
 import {Grid, Paper} from '@mui/material';
 import {InputForm} from '../../components/InputForm/InputForm';
 import {TodolistWithDispatch} from './TodolistWithRedux';
+import {Navigate} from 'react-router-dom';
 
 
 export const TodolistsList: React.FC = () => {
 
   // const todolists = useSelector<AppRootReducerType, TodolistDomainType[]>((store) => store.todolists)
   const todolists = useAppSelector<TodolistDomainType[]>((store) => store.todolists)
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
+
   const dispatch = AppDispatch()
 
   useEffect(() => {
-
+    if (!isLoggedIn) return
     dispatch(fetchTodolistTC());
   }, [])
 
@@ -37,6 +40,13 @@ export const TodolistsList: React.FC = () => {
   const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
     dispatch(changeTodolistTitleTC(todolistId, title))
   }, [dispatch])
+
+
+  // debugger;
+  if (!isLoggedIn) {
+    return <Navigate to={'/login'}/>
+  }
+
   return (
     <>
       <Grid container style={{padding: '20px'}}>

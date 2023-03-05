@@ -30,7 +30,7 @@ const initialGlobalState = {
     status:'loading',
     error:null,
   },
-  login:{
+  auth:{
     isLoggedIn: false
   }
 }

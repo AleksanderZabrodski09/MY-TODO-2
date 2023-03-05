@@ -9,7 +9,7 @@ import {authReducer} from '../features/Login/auth-reducer';
 
 
 const rootReducer = combineReducers({
-  login:authReducer,
+  auth:authReducer,
   tasks: tasksReducer,
   todolists: todolistsReducer,
   app: appReducer

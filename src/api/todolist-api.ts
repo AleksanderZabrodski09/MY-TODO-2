@@ -25,8 +25,8 @@ export type LoginType= {
 
 export const authAPI= {
   login(data:LoginType){
-    return instance.post< LoginType,ResponseType<{ userId:number }>>('auth/login', data)
-      // .then((res) => res.data)
+    return instance.post< LoginType, AxiosResponse<ResponseType<{ userId:number }>>>('auth/login', data)
+      .then((res) => res.data)
   },
 
 }

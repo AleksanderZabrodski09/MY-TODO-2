@@ -29,6 +29,7 @@ export const loginTC = (data: LoginType) => async (dispatch: Dispatch) => {
 
   try {
     const res = await authAPI.login(data)
+
     if (res.resultCode === ResultCode.SUCCEEDED) {
       dispatch(setIsLoggedInAC(true))
       dispatch(setLoadingStatusAC('succeeded'))
